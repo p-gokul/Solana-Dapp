@@ -35,7 +35,7 @@ const LaunchToken = () => {
   const uriRef = useRef<HTMLInputElement>(null);
   const supplyRef = useRef<HTMLInputElement>(null);
 
-  if (!publicKey) return null;
+  if (!publicKey) return <div>Please Connect Wallet...</div>;
 
   const handleCreateToken = async () => {
     const name = nameRef.current?.value;
@@ -151,7 +151,7 @@ const LaunchToken = () => {
   };
 
   return (
-    <div>
+    <div className="mt-20">
       <input ref={nameRef} type="text" placeholder="Token Name" />
       <input ref={symbolRef} type="text" placeholder="Token Symbol" />
       <input ref={uriRef} type="text" placeholder="Image URL (Metadata URI)" />

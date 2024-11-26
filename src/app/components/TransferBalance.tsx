@@ -7,6 +7,7 @@ import {
   TransactionInstruction,
 } from "@solana/web3.js";
 import { useRef } from "react";
+import { isValidAddress } from "../utils";
 
 const TransferBalance = () => {
   const { connection } = useConnection();
@@ -16,17 +17,6 @@ const TransferBalance = () => {
   const amountRef = useRef<HTMLInputElement>(null);
 
   if (!publicKey) return;
-
-  // Validate the recipient address
-  const isValidAddress = (address: string) => {
-    try {
-      new PublicKey(address);
-      return true;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  };
 
   // Send Transaction Function
   const handleTransfer = async () => {

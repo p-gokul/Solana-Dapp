@@ -24,7 +24,7 @@ export function NavBar() {
 
         <div className="flex items-center space-x-6">
           <Link
-            href="/categories"
+            href="/token"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             Token
