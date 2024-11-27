@@ -1,7 +1,7 @@
 "use client";
 
-const TransferTokenPage = () => {
-  return <div>Transfer Token Page</div>;
+const MintTokenPage = () => {
+  return <div>Mint Token Page</div>;
 };
 
-export default TransferTokenPage;
+export default MintTokenPage;
