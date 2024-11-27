@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  MINT_SIZE,
   TOKEN_2022_PROGRAM_ID,
   createMintToInstruction,
   createAssociatedTokenAccountInstruction,
@@ -11,17 +10,10 @@ import {
   TYPE_SIZE,
   LENGTH_SIZE,
   ExtensionType,
-  mintTo,
-  getOrCreateAssociatedTokenAccount,
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import {
-  Keypair,
-  PublicKey,
-  SystemProgram,
-  Transaction,
-} from "@solana/web3.js";
+import { Keypair, SystemProgram, Transaction } from "@solana/web3.js";
 import { isValidAddress } from "@/app/utils";
 import { createInitializeInstruction, pack } from "@solana/spl-token-metadata";
 import { useRef } from "react";
