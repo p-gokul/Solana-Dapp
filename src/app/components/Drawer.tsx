@@ -3,6 +3,7 @@ import LaunchToken from "@/app/components/Tokens/CreateToken";
 import MintTokenPage from "@/app/components/Tokens/MintToken";
 import DisplayTokenPage from "@/app/components/Tokens/DisplayToken";
 import TransferTokenPage from "@/app/components/Tokens/TransferToken";
+import DelegateTokenPage from "./Tokens/DelegateToken";
 
 const Drawer = () => {
   const menuItems = [
@@ -10,7 +11,7 @@ const Drawer = () => {
     { name: "Create Token", component: <LaunchToken /> },
     { name: "Mint Token", component: <MintTokenPage /> },
     { name: "Transfer Token", component: <TransferTokenPage /> },
-    { name: "Delegate Token", component: <div>Delegate Token Component</div> },
+    { name: "Delegate Token", component: <DelegateTokenPage /> },
     {
       name: "Revoke Delegated Token",
       component: <div>Revoke Delegated Token Component</div>,
