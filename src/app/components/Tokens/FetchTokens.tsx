@@ -89,7 +89,5 @@ export const useTokens = (includeMetadata: boolean = false) => {
     fetchTokens();
   }, [publicKey, connection, includeMetadata]);
 
-  console.log("The tokens are ", tokens);
-
   return tokens;
 };

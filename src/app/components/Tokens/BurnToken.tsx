@@ -7,21 +7,19 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import {
   TOKEN_2022_PROGRAM_ID,
-  // createApproveInstruction,
-  createRevokeInstruction,
+  createBurnInstruction,
 } from "@solana/spl-token";
 import { useState } from "react";
 import Modal from "react-modal";
 
-const RevokeDelegatedToken = () => {
+const BurnTokenPage = () => {
   const tokens = useTokens(); // Fetch tokens without metadata
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
-  // const [delegateAmount, setDelegateAmount] = useState<string>("");
-  // const [recipientAddress, setRecipientAddress] = useState<string>("");
+  const [burnAmount, setBurnAmount] = useState<string>("");
 
   const openModal = (token: TokenInfo) => {
     setSelectedToken(token);
@@ -30,26 +28,32 @@ const RevokeDelegatedToken = () => {
 
   const closeModal = () => {
     setSelectedToken(null);
-    // setDelegateAmount("");
+    setBurnAmount("");
     setModalIsOpen(false);
   };
 
-  const handleRevokeDelegate = async () => {
+  const handleBurn = async () => {
     if (!publicKey || !selectedToken) {
       console.error("Wallet not connected or token not selected!");
       return;
     }
 
     try {
-      // const mintPubkey = new PublicKey(selectedToken.mintAddress);
+      const mintPubkey = new PublicKey(selectedToken.mintAddress);
       const ATA = new PublicKey(selectedToken.tokenAccountAddress);
-      // const recipientPublicKey = new PublicKey(recipientAddress);
 
-      // const amountToDelegate =
-      //   parseFloat(delegateAmount) * Math.pow(10, selectedToken.decimals);
+      const amountToBurn =
+        parseFloat(burnAmount) * Math.pow(10, selectedToken.decimals);
 
       const transaction = new Transaction().add(
-        createRevokeInstruction(ATA, publicKey, [], TOKEN_2022_PROGRAM_ID)
+        createBurnInstruction(
+          ATA,
+          mintPubkey,
+          publicKey,
+          amountToBurn,
+          [],
+          TOKEN_2022_PROGRAM_ID
+        )
       );
 
       const signature = await sendTransaction(transaction, connection);
@@ -57,13 +61,13 @@ const RevokeDelegatedToken = () => {
 
       closeModal();
     } catch (error) {
-      console.error("Error delegating tokens:", error);
+      console.error("Error burning tokens:", error);
     }
   };
 
   return (
     <div>
-      <h2>Revoke Token Delegation Page</h2>
+      <h2>Token Burning Page</h2>
       {tokens.length === 0 ? (
         <div>No tokens found.</div>
       ) : (
@@ -80,9 +84,7 @@ const RevokeDelegatedToken = () => {
               <div>
                 <strong>Amount:</strong> {token.tokenAmount}
               </div>
-              <button onClick={() => openModal(token)}>
-                Revoke Delegated Token
-              </button>
+              <button onClick={() => openModal(token)}>Burn Token</button>
               <hr />
             </li>
           ))}
@@ -91,7 +93,7 @@ const RevokeDelegatedToken = () => {
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div className="ml-60 mt-20">
-          <h2>Revoke Delegated Tokens</h2>
+          <h2>Burn Tokens</h2>
           {selectedToken && (
             <>
               <p>
@@ -101,8 +103,15 @@ const RevokeDelegatedToken = () => {
                 <strong>Associated Token Account Address:</strong>{" "}
                 {selectedToken.tokenAccountAddress}
               </p>
-
-              <button onClick={handleRevokeDelegate}>Revoke Delegate</button>
+              <label>
+                Amount to Burn:
+                <input
+                  type="number"
+                  value={burnAmount}
+                  onChange={(e) => setBurnAmount(e.target.value)}
+                />
+              </label>
+              <button onClick={handleBurn}>Burn Token</button>
               <button onClick={closeModal}>Cancel</button>
             </>
           )}
@@ -112,4 +121,4 @@ const RevokeDelegatedToken = () => {
   );
 };
 
-export default RevokeDelegatedToken;
+export default BurnTokenPage;

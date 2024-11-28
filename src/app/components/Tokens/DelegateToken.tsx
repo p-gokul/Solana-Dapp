@@ -1,20 +1,24 @@
+// MintTokenPage.tsx
+
 "use client";
 
 import { useTokens, TokenInfo } from "./FetchTokens";
-import { createTransferInstruction } from "@solana/spl-token";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
+import {
+  TOKEN_2022_PROGRAM_ID,
+  createApproveInstruction,
+} from "@solana/spl-token";
 import { useState } from "react";
 import Modal from "react-modal";
 
 const DelegateTokenPage = () => {
-  const tokens = useTokens();
+  const tokens = useTokens(); // Fetch tokens without metadata
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
-
   const [delegateAmount, setDelegateAmount] = useState<string>("");
   const [recipientAddress, setRecipientAddress] = useState<string>("");
 
@@ -26,7 +30,6 @@ const DelegateTokenPage = () => {
   const closeModal = () => {
     setSelectedToken(null);
     setDelegateAmount("");
-    setRecipientAddress("");
     setModalIsOpen(false);
   };
 
@@ -35,41 +38,42 @@ const DelegateTokenPage = () => {
       console.error("Wallet not connected or token not selected!");
       return;
     }
-    if (!recipientAddress) {
-      alert("Recipient address is empty!");
-      return;
-    }
+
     try {
+      // const mintPubkey = new PublicKey(selectedToken.mintAddress);
+      const ATA = new PublicKey(selectedToken.tokenAccountAddress);
       const recipientPublicKey = new PublicKey(recipientAddress);
-      const transaction = new Transaction();
-      const amount =
+
+      const amountToDelegate =
         parseFloat(delegateAmount) * Math.pow(10, selectedToken.decimals);
-      const transactionSignature = await createTransferInstruction(
-        publicKey,
-        recipientPublicKey,
-        publicKey,
-        amount
+
+      const transaction = new Transaction().add(
+        createApproveInstruction(
+          ATA,
+          recipientPublicKey,
+          publicKey,
+          amountToDelegate,
+          [],
+          TOKEN_2022_PROGRAM_ID
+        )
       );
 
-      transaction.add(transactionSignature);
-
-      // Send transaction
       const signature = await sendTransaction(transaction, connection);
       console.log(`Transaction successful! Signature: ${signature}`);
 
       closeModal();
     } catch (error) {
-      console.log("Something went wrong", error);
+      console.error("Error delegating tokens:", error);
     }
   };
 
   return (
     <div>
-      <div> Token Delegate Page </div>
+      <h2>Token Delegation Page</h2>
       {tokens.length === 0 ? (
-        <div>No Tokens found</div>
+        <div>No tokens found.</div>
       ) : (
-        <div>
+        <ul>
           {tokens.map((token) => (
             <li key={token.mintAddress}>
               <div>
@@ -86,28 +90,20 @@ const DelegateTokenPage = () => {
               <hr />
             </li>
           ))}
-        </div>
+        </ul>
       )}
 
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div className="ml-60 mt-20">
-          <h2>Transfer Tokens</h2>
+          <h2>Delegate Tokens</h2>
           {selectedToken && (
             <>
               <p>
                 <strong>Mint Address:</strong> {selectedToken.mintAddress}
               </p>
               <p>
-                <strong>Token Name:</strong>
-                {selectedToken.metadata?.name || "Undefined"}
-              </p>
-              <p>
-                <strong>Symbol:</strong>
-                {selectedToken.metadata?.symbol || "Undefined"}
-              </p>
-              <p>
-                <strong>Available Amount:</strong>
-                {selectedToken.tokenAmount || "Undefined"}
+                <strong>Associated Token Account Address:</strong>{" "}
+                {selectedToken.tokenAccountAddress}
               </p>
               <label>
                 Recipient Address:
@@ -118,17 +114,15 @@ const DelegateTokenPage = () => {
                   onChange={(e) => setRecipientAddress(e.target.value)}
                 />
               </label>
-              <br />
               <label>
-                Token Amount:
+                Amount to Delegate:
                 <input
                   type="number"
                   value={delegateAmount}
                   onChange={(e) => setDelegateAmount(e.target.value)}
                 />
               </label>
-              <br />
-              <button onClick={handleDelegate}>Transfer Token</button>
+              <button onClick={handleDelegate}>Delegate Token</button>
               <button onClick={closeModal}>Cancel</button>
             </>
           )}

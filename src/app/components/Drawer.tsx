@@ -4,6 +4,9 @@ import MintTokenPage from "@/app/components/Tokens/MintToken";
 import DisplayTokenPage from "@/app/components/Tokens/DisplayToken";
 import TransferTokenPage from "@/app/components/Tokens/TransferToken";
 import DelegateTokenPage from "./Tokens/DelegateToken";
+import BurnTokenPage from "./Tokens/BurnToken";
+import RevokeDelegatedToken from "./Tokens/RevokeDelegatedToken";
+import DelegationDetails from "./Tokens/DelegationDetails";
 
 const Drawer = () => {
   const menuItems = [
@@ -11,14 +14,26 @@ const Drawer = () => {
     { name: "Create Token", component: <LaunchToken /> },
     { name: "Mint Token", component: <MintTokenPage /> },
     { name: "Transfer Token", component: <TransferTokenPage /> },
-    { name: "Delegate Token", component: <DelegateTokenPage /> },
     {
-      name: "Revoke Delegated Token",
-      component: <div>Revoke Delegated Token Component</div>,
+      name: "Delegate Token",
+      component: (
+        <div className="flex w-full h-full">
+          <div className="w-1/2 p-4">
+            <DelegateTokenPage />
+          </div>
+          <div className="w-1/2 p-4">
+            <DelegationDetails />
+          </div>
+        </div>
+      ),
     },
     {
-      name: "Transfer Token Authority",
-      component: <div>Transfer Token Authority Component</div>,
+      name: "Revoke Delegated Token",
+      component: <RevokeDelegatedToken />,
+    },
+    {
+      name: "Burn Tokens",
+      component: <BurnTokenPage />,
     },
   ];
 
