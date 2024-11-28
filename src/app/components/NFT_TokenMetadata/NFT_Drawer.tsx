@@ -1,19 +1,35 @@
 import { useState } from "react";
 
 import CreateNFTPage from "./CreateNFT";
+import DisplayNFTPage from "./DisplayNFT";
+import TransferNFTPage from "./TransferNFT";
 
 const NFT_Drawer = () => {
   const menuItems = [
-    { name: "Display Tokens", component: <div>Display NFT Page</div> },
     {
-      name: "Create Token",
+      name: "Display NFTs",
       component: (
         <div>
-          Create NFT Page <CreateNFTPage />{" "}
+          <DisplayNFTPage />
         </div>
       ),
     },
-    { name: "Transfer Token", component: <div>Transfer NFT Page</div> },
+    {
+      name: "Create NFTs",
+      component: (
+        <div>
+          Create NFT Page <CreateNFTPage />
+        </div>
+      ),
+    },
+    {
+      name: "Transfer NFTs",
+      component: (
+        <div>
+          <TransferNFTPage />
+        </div>
+      ),
+    },
   ];
 
   const [activeComponent, setActiveComponent] = useState(
