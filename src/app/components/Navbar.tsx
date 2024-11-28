@@ -30,7 +30,7 @@ export function NavBar() {
             Token
           </Link>
           <Link
-            href="/courses"
+            href="/nft-metadata"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             NFT ( spl-token )
