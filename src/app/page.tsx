@@ -5,11 +5,11 @@ import AirDrop from "./components/AirDrop";
 import TransferBalance from "./components/TransferBalance";
 
 export default function Home() {
-  return (
-    <div>
-      <HomePage />
-      <AirDrop />
-      <TransferBalance />
-    </div>
-  );
+    return (
+        <div>
+            <HomePage />
+            <AirDrop />
+            <TransferBalance />
+        </div>
+    );
 }

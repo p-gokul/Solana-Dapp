@@ -1,10 +1,9 @@
 "use client";
 
-// import Drawer from "@/app/components/Drawer";
-import NFT_Drawer from "@/app/components/NFT_TokenMetadata/NFT_Drawer";
+import NftDrawer from "@/app/components/NFT_TokenMetadata/NftDrawer";
 
-const CreateTokenPage = () => {
-  return <NFT_Drawer />;
+const TokenMetadataNftPage = () => {
+    return <NftDrawer />;
 };
 
-export default CreateTokenPage;
+export default TokenMetadataNftPage;

@@ -1,0 +1,10 @@
+{
+    "tabWidth": 4,
+    "bracketSpacing": true,
+    "singleQuote": false,
+    "semi": true,
+    "plugins": [
+        "prettier-plugin-organize-imports",
+        "prettier-plugin-tailwindcss"
+    ]
+}

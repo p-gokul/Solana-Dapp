@@ -1,0 +1,3 @@
+bun prettier . --write
+
+bun run lint 

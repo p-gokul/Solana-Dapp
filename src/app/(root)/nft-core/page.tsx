@@ -1,9 +1,9 @@
 "use client";
 
-import CoreNFT_Drawer from "@/app/components/NFT_Core/CoreNFT_Drawer";
+import CoreNftDrawer from "@/app/components/NFT_Core/CoreNftDrawer";
 
-const CreateCoreNFTPage = () => {
-  return <CoreNFT_Drawer />;
+const CoreNftPage = () => {
+    return <CoreNftDrawer />;
 };
 
-export default CreateCoreNFTPage;
+export default CoreNftPage;

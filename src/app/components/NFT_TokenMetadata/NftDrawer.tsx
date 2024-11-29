@@ -1,39 +1,43 @@
-import LaunchToken from "@/app/components/Tokens/CreateToken";
-import DisplayTokenPage from "@/app/components/Tokens/DisplayToken";
-import MintTokenPage from "@/app/components/Tokens/MintToken";
-import TransferTokenPage from "@/app/components/Tokens/TransferToken";
 import { useState } from "react";
-import BurnTokenPage from "./Tokens/BurnToken";
-import DelegateTokenPage from "./Tokens/DelegateToken";
-import DelegationDetails from "./Tokens/DelegationDetails";
-import RevokeDelegatedToken from "./Tokens/RevokeDelegatedToken";
 
-const Drawer = () => {
+import BurnNFTPage from "./BurnNft";
+import CreateNFTPage from "./CreateNft";
+import DisplayNFTPage from "./DisplayNft";
+import TransferNFTPage from "./TransferNft";
+
+const NftDrawer = () => {
     const menuItems = [
-        { name: "Display Tokens", component: <DisplayTokenPage /> },
-        { name: "Create Token", component: <LaunchToken /> },
-        { name: "Mint Token", component: <MintTokenPage /> },
-        { name: "Transfer Token", component: <TransferTokenPage /> },
         {
-            name: "Delegate Token",
+            name: "Display NFT",
             component: (
-                <div className="flex h-full w-full">
-                    <div className="w-1/2 p-4">
-                        <DelegateTokenPage />
-                    </div>
-                    <div className="w-1/2 p-4">
-                        <DelegationDetails />
-                    </div>
+                <div>
+                    <DisplayNFTPage />
                 </div>
             ),
         },
         {
-            name: "Revoke Delegated Token",
-            component: <RevokeDelegatedToken />,
+            name: "Create NFT",
+            component: (
+                <div>
+                    Create NFT Page <CreateNFTPage />
+                </div>
+            ),
         },
         {
-            name: "Burn Tokens",
-            component: <BurnTokenPage />,
+            name: "Transfer NFT",
+            component: (
+                <div>
+                    <TransferNFTPage />
+                </div>
+            ),
+        },
+        {
+            name: "Burn NFT",
+            component: (
+                <div>
+                    <BurnNFTPage />
+                </div>
+            ),
         },
     ];
 
@@ -46,9 +50,15 @@ const Drawer = () => {
             {/* Sidebar */}
             <div className="fixed left-0 top-0 z-40 mt-20 h-screen w-64 bg-gray-50 dark:bg-gray-800">
                 <div className="h-full overflow-y-auto px-3 py-4">
+                    <div className="group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <span className="ms-3">
+                            NFT Operations ( Metaplex - Token Metadata )
+                        </span>
+                    </div>
+                    <hr className="my-2" />
                     <ul className="space-y-2 font-medium">
-                        {menuItems.map((item) => (
-                            <li key={item.name}>
+                        {menuItems.map((item, index) => (
+                            <li key={index}>
                                 <button
                                     type="button"
                                     onClick={() =>
@@ -72,4 +82,4 @@ const Drawer = () => {
     );
 };
 
-export default Drawer;
+export default NftDrawer;

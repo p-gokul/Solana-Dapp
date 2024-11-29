@@ -2,8 +2,8 @@
 
 import Drawer from "@/app/components/Drawer";
 
-const CreateTokenPage = () => {
-  return <Drawer />;
+const SplTokenPage = () => {
+    return <Drawer />;
 };
 
-export default CreateTokenPage;
+export default SplTokenPage;
