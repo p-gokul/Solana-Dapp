@@ -50,10 +50,10 @@ const TransferCoreNFTPage = () => {
         new PublicKey(recipientAddress)
       );
 
-      const umiPublicKey = publicKey(selectedNFT.mint);
+      const umiMintAddress = publicKey(selectedNFT.mint);
 
       await transferV1(umi, {
-        asset: umiPublicKey,
+        asset: umiMintAddress,
         newOwner: umiRecipientPublicKey,
       }).sendAndConfirm(umi);
 
