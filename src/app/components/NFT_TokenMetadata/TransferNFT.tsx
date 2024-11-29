@@ -51,7 +51,6 @@ const TransferNFTPage = () => {
       umi.use(walletAdapterIdentity(wallet));
       umi.use(mplTokenMetadata());
 
-      const umiPublicKey = fromWeb3JsPublicKey(publicKey);
       const umiRecipientPublicKey = fromWeb3JsPublicKey(
         new PublicKey(recipientAddress)
       );
@@ -59,19 +58,13 @@ const TransferNFTPage = () => {
         new PublicKey(selectedNFT.mint)
       );
 
-      console.log("The umiPublicKey is ", umiPublicKey);
-      console.log("The umiRecipientPublicKey is ", umiRecipientPublicKey);
-      console.log("The umi Identity is ", umi.identity);
-
-      const transfertx = await transferV1(umi, {
+      await transferV1(umi, {
         mint: umiMintAddress, // NFT mint address
         authority: umi.identity,
         tokenOwner: umi.identity.publicKey,
         destinationOwner: umiRecipientPublicKey,
         tokenStandard: TokenStandard.NonFungible,
       }).sendAndConfirm(umi);
-
-      console.log(transfertx);
 
       alert("NFT transferred successfully!");
       closeModal();

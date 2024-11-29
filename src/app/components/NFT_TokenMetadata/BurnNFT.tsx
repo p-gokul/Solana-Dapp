@@ -49,22 +49,16 @@ const BurnNFTPage = () => {
       umi.use(walletAdapterIdentity(wallet));
       umi.use(mplTokenMetadata());
 
-      const umiPublicKey = fromWeb3JsPublicKey(publicKey);
       const umiMintAddress = fromWeb3JsPublicKey(
         new PublicKey(selectedNFT.mint)
       );
 
-      console.log("The umiPublicKey is ", umiPublicKey);
-      console.log("The umi Identity is ", umi.identity);
-
-      const transfertx = await burnV1(umi, {
+      await burnV1(umi, {
         mint: umiMintAddress, // NFT mint address
         authority: umi.identity,
         tokenOwner: umi.identity.publicKey,
         tokenStandard: TokenStandard.NonFungible,
       }).sendAndConfirm(umi);
-
-      console.log(transfertx);
 
       alert("NFT burned successfully!");
       closeModal();

@@ -33,25 +33,25 @@ export function NavBar() {
             href="/nft-metadata"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
-            NFT ( Token Metadata - Metaplex )
+            NFT ( Metaplex - Token Metadata )
           </Link>
           <Link
-            href="/goodies"
+            href="/nft-core"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
-            NFT ( Metaplex )
+            NFT ( Metaplex - Core )
           </Link>
           <Link
-            href="/about"
+            href="/dex"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             DEX
           </Link>
           <Link
-            href="/about"
+            href="/blogs"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
-            Token Incineration
+            Blogs
           </Link>
           <div className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
             <WalletMultiButton />
