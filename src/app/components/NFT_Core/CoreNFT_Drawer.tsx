@@ -1,14 +1,24 @@
 import { useState } from "react";
+import CreateNFTPageCore from "./CreateNFT";
+import DisplayCoreNFTPage from "./DisplayNFT";
 
 const CoreNFT_Drawer = () => {
   const menuItems = [
     {
       name: "Display NFT",
-      component: <div>Display NFT Page</div>,
+      component: (
+        <div>
+          <DisplayCoreNFTPage />
+        </div>
+      ),
     },
     {
       name: "Create NFT",
-      component: <div>Create NFT Page</div>,
+      component: (
+        <div>
+          <CreateNFTPageCore />
+        </div>
+      ),
     },
     {
       name: "Transfer NFT",
@@ -29,6 +39,10 @@ const CoreNFT_Drawer = () => {
       {/* Sidebar */}
       <div className="fixed mt-20 top-0 left-0 z-40 w-64 h-screen bg-gray-50 dark:bg-gray-800">
         <div className="h-full px-3 py-4 overflow-y-auto">
+          <div className="flex items-center w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <span className="ms-3">NFT Operations ( Metaplex Core )</span>
+          </div>
+          <hr className="my-2" />
           <ul className="space-y-2 font-medium">
             {menuItems.map((item, index) => (
               <li key={index}>

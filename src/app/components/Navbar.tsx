@@ -30,7 +30,7 @@ export function NavBar() {
             Token
           </Link>
           <Link
-            href="/nft-metadata"
+            href="/nft-token-metadata"
             className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             NFT ( Metaplex - Token Metadata )

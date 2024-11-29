@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "NFT Metadata",
-  description: "NFT Page",
+  title: "NFT - MPL Token Metadata",
+  description: "NFT Page ( MPL Token Metadata )",
 };
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
