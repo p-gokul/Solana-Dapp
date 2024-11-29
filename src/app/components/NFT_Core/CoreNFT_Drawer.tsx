@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CreateNFTPageCore from "./CreateNFT";
 import DisplayCoreNFTPage from "./DisplayNFT";
+import TransferCoreNFTPage from "./TransferNFT";
 
 const CoreNFT_Drawer = () => {
   const menuItems = [
@@ -22,7 +23,11 @@ const CoreNFT_Drawer = () => {
     },
     {
       name: "Transfer NFT",
-      component: <div>Transfer NFT Page</div>,
+      component: (
+        <div>
+          <TransferCoreNFTPage />
+        </div>
+      ),
     },
     {
       name: "Burn NFT",

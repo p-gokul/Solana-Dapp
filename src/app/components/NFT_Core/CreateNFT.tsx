@@ -2,11 +2,10 @@ import { useState } from "react";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { generateSigner } from "@metaplex-foundation/umi";
 import { clusterApiUrl } from "@solana/web3.js";
-import {
-  //   createNft,
-  //   fetchDigitalAsset,
-  mplTokenMetadata,
-} from "@metaplex-foundation/mpl-token-metadata";
+import //   createNft,
+//   fetchDigitalAsset,
+// mplTokenMetadata,
+"@metaplex-foundation/mpl-token-metadata";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
 // import { fromWeb3JsPublicKey } from "@metaplex-foundation/umi-web3js-adapters";
@@ -36,7 +35,7 @@ const CreateNFTPageCore = () => {
       umi.use(walletAdapterIdentity(wallet));
 
       // Set wallet as the signer
-      umi.use(mplTokenMetadata());
+      // umi.use(mplTokenMetadata());
 
       //   const umiPublicKey = fromWeb3JsPublicKey(publicKey);
 
