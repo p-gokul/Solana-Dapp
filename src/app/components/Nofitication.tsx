@@ -32,7 +32,7 @@ const Notification: React.FC<NotificationProps> = ({
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-4 left-4 w-64 rounded-md bg-green-500 p-4 text-white shadow-lg">
+        <div className="fixed bottom-4 left-4 z-50 w-64 rounded-md bg-green-500 p-4 text-white shadow-lg">
             <div className="mb-2 flex items-center justify-between">
                 <span>{message}</span>
                 <button
@@ -47,7 +47,7 @@ const Notification: React.FC<NotificationProps> = ({
             </div>
             {transactionSignature && (
                 <div className="mt-2 truncate text-sm">
-                    <span>Signature: </span>
+                    <span>Transaction: </span>
                     <a
                         href={`https://explorer.solana.com/tx/${transactionSignature}?cluster=devnet`}
                         target="_blank"

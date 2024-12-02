@@ -10,6 +10,9 @@ import { clusterApiUrl } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 // import Image from "next/image";
+import { useNotification } from "@/app/hooks/useNotifications";
+import { base58 } from "@metaplex-foundation/umi/serializers";
+import Notification from "../Nofitication";
 
 const BurnCoreNftPage = () => {
     const wallet = useWallet();
@@ -19,6 +22,14 @@ const BurnCoreNftPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for burn
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openModal = (nft: any) => {
@@ -46,11 +57,16 @@ const BurnCoreNftPage = () => {
             const assetId = publicKey(selectedNFT.mint);
             const asset = await fetchAsset(umi, assetId);
 
-            await burn(umi, {
+            const { signature } = await burn(umi, {
                 asset: asset, // NFT mint address
             }).sendAndConfirm(umi);
 
-            alert("NFT burned successfully!");
+            // Show success notification
+            showNotification(
+                "NFT burned successfully !!!",
+                base58.deserialize(signature)[0],
+            );
+
             closeModal();
         } catch (_error) {
             alert("Failed to burn NFT. Please try again.");
@@ -132,6 +148,14 @@ const BurnCoreNftPage = () => {
                     </button>
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useNotification } from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     createMintToInstruction,
@@ -11,6 +12,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
+import Notification from "../Nofitication";
 
 const MintTokenPage = () => {
     const tokens = useTokens(); // Fetch tokens without metadata
@@ -20,6 +22,14 @@ const MintTokenPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
     const [mintAmount, setMintAmount] = useState<string>("");
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const openModal = (token: TokenInfo) => {
         setSelectedToken(token);
@@ -57,7 +67,9 @@ const MintTokenPage = () => {
             );
 
             const signature = await sendTransaction(transaction, connection);
-            alert(`Transaction successful! Signature: ${signature}`);
+            // alert(`Transaction successful! Signature: ${signature}`);
+            // Show success notification
+            showNotification(`${mintAmount} Token Minted!`, signature);
 
             closeModal();
         } catch (_error) {
@@ -132,6 +144,14 @@ const MintTokenPage = () => {
                     )}
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

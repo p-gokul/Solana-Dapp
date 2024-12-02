@@ -1,3 +1,4 @@
+import { useNotification } from "@/app/hooks/useNotifications";
 import { nftTokenMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import {
     createNft,
@@ -8,11 +9,17 @@ import { generateSigner, percentAmount } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
 import { fromWeb3JsPublicKey } from "@metaplex-foundation/umi-web3js-adapters";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl } from "@solana/web3.js";
 import axios from "axios";
 import { useState } from "react";
 import { z } from "zod";
+import Notification from "../Nofitication";
+
+// import { useNotification } from "@/app/hooks/useNotifications";
+// import Notification from "../Nofitication";
+// import { base58 } from "@metaplex-foundation/umi/serializers";
 
 const CreateNftPage = () => {
     const { publicKey } = useWallet(); // Access wallet adapter
@@ -24,6 +31,14 @@ const CreateNftPage = () => {
     const [percent, setPercent] = useState<number>(0);
     const [status, setStatus] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const handleCreateNFT = async () => {
         try {
@@ -41,11 +56,11 @@ const CreateNftPage = () => {
 
             // Fetch metadata from the URI
             const response = await axios(uri);
-            if (!response.data.ok) {
+            if (!response.data) {
                 throw new Error("Failed to fetch metadata from the URI");
             }
 
-            const metadata = await response.data.json();
+            const metadata = await response.data;
 
             // Validate metadata using Zod schema
             nftTokenMetadataSchema.parse(metadata);
@@ -75,17 +90,16 @@ const CreateNftPage = () => {
                 ],
             }).sendAndConfirm(umi);
 
-            // setStatus("Fetching digital asset...");
-            // const asset = await fetchDigitalAsset(umi, mint.publicKey);
-
-            // console.log("NFT created successfully!");
-            // console.log("Mint address:", mint.publicKey);
-            // console.log("Transaction signature:", signature);
-            // console.log("Digital Asset:", asset);
-
             setStatus(
                 `NFT created successfully! Mint address: ${mint.publicKey}, Transaction: ${signature}`,
             );
+
+            // Show success notification
+            showNotification(
+                "NFT created successfully !!!",
+                base58.deserialize(signature)[0],
+            );
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error instanceof z.ZodError) {
@@ -154,6 +168,14 @@ const CreateNftPage = () => {
 
             {/* Status Message */}
             {status && <p className="mt-4 text-gray-700">{status}</p>}
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import { useNotification } from "@/app/hooks/useNotifications";
 import isValidAddress from "@/app/utils";
 import {
     createAssociatedTokenAccountInstruction,
@@ -17,6 +18,9 @@ import { createInitializeInstruction, pack } from "@solana/spl-token-metadata";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Keypair, SystemProgram, Transaction } from "@solana/web3.js";
 import { useRef } from "react";
+import Notification from "../Nofitication";
+// import { useNotification } from "@/app/hooks/useNotifications";
+// import Notification from "../Nofitication";
 
 const LaunchToken = () => {
     const { connection } = useConnection();
@@ -26,6 +30,14 @@ const LaunchToken = () => {
     const symbolRef = useRef<HTMLInputElement>(null);
     const uriRef = useRef<HTMLInputElement>(null);
     const supplyRef = useRef<HTMLInputElement>(null);
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     if (!publicKey) return null;
 
@@ -134,9 +146,10 @@ const LaunchToken = () => {
             ),
         );
 
-        await sendTransaction(transaction3, connection);
+        const signature = await sendTransaction(transaction3, connection);
 
-        alert("Minted!");
+        // Show success notification
+        showNotification("Token Creation successful!", signature);
     };
 
     return (
@@ -152,6 +165,14 @@ const LaunchToken = () => {
             <button onClick={handleCreateToken} type="button">
                 Create a Token
             </button>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

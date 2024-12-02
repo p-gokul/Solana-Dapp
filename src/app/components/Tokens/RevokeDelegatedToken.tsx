@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useNotification } from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     TOKEN_2022_PROGRAM_ID,
@@ -12,6 +13,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
+import Notification from "../Nofitication";
 
 const RevokeDelegatedToken = () => {
     const tokens = useTokens(); // Fetch tokens without metadata
@@ -20,8 +22,13 @@ const RevokeDelegatedToken = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
-    // const [delegateAmount, setDelegateAmount] = useState<string>("");
-    // const [recipientAddress, setRecipientAddress] = useState<string>("");
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const openModal = (token: TokenInfo) => {
         setSelectedToken(token);
@@ -58,7 +65,9 @@ const RevokeDelegatedToken = () => {
             );
 
             const signature = await sendTransaction(transaction, connection);
-            alert(`Transaction successful! Signature: ${signature}`);
+            // alert(`Transaction successful! Signature: ${signature}`);
+            // Show success notification
+            showNotification("Delegated Token Revoked !!", signature);
 
             closeModal();
         } catch (_error) {
@@ -127,6 +136,14 @@ const RevokeDelegatedToken = () => {
                     )}
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useNotification } from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     TOKEN_2022_PROGRAM_ID,
@@ -11,6 +12,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
+import Notification from "../Nofitication";
 
 const DelegateTokenPage = () => {
     const tokens = useTokens(); // Fetch tokens without metadata
@@ -21,6 +23,14 @@ const DelegateTokenPage = () => {
     const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
     const [delegateAmount, setDelegateAmount] = useState<string>("");
     const [recipientAddress, setRecipientAddress] = useState<string>("");
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const openModal = (token: TokenInfo) => {
         setSelectedToken(token);
@@ -58,7 +68,13 @@ const DelegateTokenPage = () => {
                 ),
             );
 
-            await sendTransaction(transaction, connection);
+            const signature = await sendTransaction(transaction, connection);
+
+            // Show success notification
+            showNotification(
+                ` ${delegateAmount} Token Delegated !!`,
+                signature,
+            );
 
             closeModal();
         } catch (_error) {
@@ -144,6 +160,14 @@ const DelegateTokenPage = () => {
                     )}
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

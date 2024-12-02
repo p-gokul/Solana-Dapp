@@ -12,6 +12,10 @@ import { useState } from "react";
 import Modal from "react-modal";
 // import Image from "next/image";
 
+import { useNotification } from "@/app/hooks/useNotifications";
+import { base58 } from "@metaplex-foundation/umi/serializers";
+import Notification from "../Nofitication";
+
 const TransferCoreNftPage = () => {
     const wallet = useWallet();
 
@@ -21,6 +25,14 @@ const TransferCoreNftPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
     const [recipientAddress, setRecipientAddress] = useState<string>("");
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openModal = (nft: any) => {
@@ -52,12 +64,16 @@ const TransferCoreNftPage = () => {
 
             const umiMintAddress = publicKey(selectedNFT.mint);
 
-            await transferV1(umi, {
+            const { signature } = await transferV1(umi, {
                 asset: umiMintAddress,
                 newOwner: umiRecipientPublicKey,
             }).sendAndConfirm(umi);
 
-            alert("NFT transferred successfully!");
+            // Show success notification
+            showNotification(
+                "NFT transferred successfully !!!",
+                base58.deserialize(signature)[0],
+            );
             closeModal();
         } catch (_error) {
             alert("Failed to transfer NFT. Please try again.");
@@ -150,6 +166,14 @@ const TransferCoreNftPage = () => {
                     </button>
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

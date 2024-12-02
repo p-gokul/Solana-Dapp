@@ -1,13 +1,20 @@
+import { useNotification } from "@/app/hooks/useNotifications";
 import { nftCoreMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import { create } from "@metaplex-foundation/mpl-core";
 import { generateSigner } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl } from "@solana/web3.js";
 import axios from "axios";
 import { useState } from "react";
 import { z } from "zod";
+import Notification from "../Nofitication";
+
+// import { useNotification } from "@/app/hooks/useNotifications";
+// import { base58 } from "@metaplex-foundation/umi/serializers";
+// import Notification from "../Nofitication";
 
 const CreateNftPageCore = () => {
     const { publicKey } = useWallet(); // Access wallet adapter
@@ -18,6 +25,14 @@ const CreateNftPageCore = () => {
     const [uri, setUri] = useState<string>("");
     const [status, setStatus] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const handleCreateNFT = async () => {
         try {
@@ -35,11 +50,11 @@ const CreateNftPageCore = () => {
 
             // Fetch metadata from the URI
             const response = await axios(uri);
-            if (!response.data.ok) {
+            if (!response.data) {
                 throw new Error("Failed to fetch metadata from the URI");
             }
 
-            const metadata = await response.data.json();
+            const metadata = await response.data;
 
             // Validate metadata using Zod schema
             nftCoreMetadataSchema.parse(metadata);
@@ -55,7 +70,7 @@ const CreateNftPageCore = () => {
             const assetSigner = generateSigner(umi);
 
             setStatus("Creating NFT...");
-            await create(umi, {
+            const { signature } = await create(umi, {
                 asset: assetSigner,
                 name: name,
                 uri: uri,
@@ -64,6 +79,13 @@ const CreateNftPageCore = () => {
             setStatus("Fetching digital asset...");
 
             setStatus(`NFT created successfully!`);
+
+            // Show success notification
+            showNotification(
+                "NFT created successfully !!!",
+                base58.deserialize(signature)[0],
+            );
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error instanceof z.ZodError) {
@@ -118,6 +140,14 @@ const CreateNftPageCore = () => {
 
             {/* Status Message */}
             {status && <p className="mt-4 text-gray-700">{status}</p>}
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

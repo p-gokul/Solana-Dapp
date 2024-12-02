@@ -14,6 +14,9 @@ import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 // import Image from "next/image";
+import { useNotification } from "@/app/hooks/useNotifications";
+import { base58 } from "@metaplex-foundation/umi/serializers";
+import Notification from "../Nofitication";
 
 const BurnNftPage = () => {
     const { publicKey } = useWallet();
@@ -24,6 +27,14 @@ const BurnNftPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openModal = (nft: any) => {
@@ -53,17 +64,22 @@ const BurnNftPage = () => {
                 new PublicKey(selectedNFT.mint),
             );
 
-            await burnV1(umi, {
+            const { signature } = await burnV1(umi, {
                 mint: umiMintAddress, // NFT mint address
                 authority: umi.identity,
                 tokenOwner: umi.identity.publicKey,
                 tokenStandard: TokenStandard.NonFungible,
             }).sendAndConfirm(umi);
 
-            alert("NFT burned successfully!");
+            // Show success notification
+            showNotification(
+                "Token Burned !!!",
+                base58.deserialize(signature)[0],
+            );
+
             closeModal();
         } catch (_error) {
-            alert("Failed to transfer NFT. Please try again.");
+            alert("Failed to burn NFT. Please try again.");
         }
     };
 
@@ -142,6 +158,14 @@ const BurnNftPage = () => {
                     </button>
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };

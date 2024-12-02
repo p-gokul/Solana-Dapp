@@ -1,5 +1,6 @@
 "use client";
 
+import { useNotification } from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -12,6 +13,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
+import Notification from "../Nofitication";
 
 const TransferTokenPage = () => {
     const tokens = useTokens(true); // Fetch tokens with metadata if needed
@@ -22,6 +24,14 @@ const TransferTokenPage = () => {
     const [selectedToken, setSelectedToken] = useState<TokenInfo | null>(null);
     const [transferAmount, setTransferAmount] = useState<string>("");
     const [recipientAddress, setRecipientAddress] = useState<string>("");
+
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     if (!publicKey) return <div>Please connect your wallet.</div>;
 
@@ -102,7 +112,11 @@ const TransferTokenPage = () => {
 
             // Send transaction
             const signature = await sendTransaction(transaction, connection);
-            alert(`Transaction successful! Signature: ${signature}`);
+            // Show success notification
+            showNotification(
+                `${transferAmount} Tokens transferred !!`,
+                signature,
+            );
 
             closeModal();
         } catch (_error) {
@@ -195,6 +209,14 @@ const TransferTokenPage = () => {
                     )}
                 </div>
             </Modal>
+            {notify && (
+                <Notification
+                    message={message}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={hideNotification}
+                />
+            )}
         </div>
     );
 };
