@@ -1,0 +1,7 @@
+services:
+    solana-dapp:
+        build: .
+        container_name: solana-dapp
+        ports:
+            - "3000:3000"
+        restart: always
