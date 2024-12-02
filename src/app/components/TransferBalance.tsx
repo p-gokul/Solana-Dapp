@@ -6,9 +6,9 @@ import {
     Transaction,
     TransactionInstruction,
 } from "@solana/web3.js";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useNotification } from "../hooks/useNotifications";
 import isValidAddress from "../utils";
-// import Notification from "../components/Notification";
 import Notification from "./Nofitication";
 
 const TransferBalance = () => {
@@ -18,12 +18,13 @@ const TransferBalance = () => {
     const addressRef = useRef<HTMLInputElement>(null);
     const amountRef = useRef<HTMLInputElement>(null);
 
-    // Notification props
-    const [notify, setNotify] = useState(false);
-    const [notificationMessage, setNotificationMessage] = useState("");
-    const [transactionSignature, setTransactionSignature] = useState<
-        string | undefined
-    >(undefined);
+    const {
+        notify,
+        message,
+        transactionSignature,
+        showNotification,
+        hideNotification,
+    } = useNotification();
 
     const handleTransfer = async () => {
         const recipientAddress = addressRef.current?.value || "";
@@ -67,15 +68,11 @@ const TransferBalance = () => {
             const signature = await sendTransaction(transaction, connection);
             await connection.confirmTransaction(signature, "finalized");
 
-            // Set notification props for success
-            setNotificationMessage("Transaction successful!");
-            setTransactionSignature(signature);
-            setNotify(true);
+            // Show success notification
+            showNotification("Transaction successful!", signature);
         } catch (_error) {
-            // Set notification props for failure
-            setNotificationMessage("Transaction failed. Something went wrong.");
-            setTransactionSignature(undefined);
-            setNotify(true);
+            // Show failure notification
+            showNotification("Transaction failed. Something went wrong.");
         }
     };
 
@@ -110,10 +107,10 @@ const TransferBalance = () => {
             {/* Render Notification */}
             {notify && (
                 <Notification
-                    message={notificationMessage}
+                    message={message}
                     transactionSignature={transactionSignature}
                     notify={notify}
-                    onClose={() => setNotify(false)}
+                    onClose={hideNotification}
                 />
             )}
         </div>
