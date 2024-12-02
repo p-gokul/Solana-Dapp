@@ -1,7 +1,7 @@
 "use client";
 
+import { useTokens } from "@/app/hooks/useTokens";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useTokens } from "./FetchTokens";
 
 const DisplayTokenPage = () => {
     const tokensWithMetadata = useTokens(true); // Set includeMetadata to true

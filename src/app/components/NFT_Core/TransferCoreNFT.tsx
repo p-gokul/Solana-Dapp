@@ -1,5 +1,6 @@
 "use client";
 
+import useFetchCoreNftDetails from "@/app/hooks/useFetchCoreNftDetails";
 import { transferV1 } from "@metaplex-foundation/mpl-core";
 import { publicKey } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
@@ -9,13 +10,12 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
-import useFetchCoreNFTDetails from "./FetchCoreNftDetails";
 // import Image from "next/image";
 
 const TransferCoreNftPage = () => {
     const wallet = useWallet();
 
-    const { nfts, loading, error } = useFetchCoreNFTDetails(); // Use the custom hook for fetching NFTs
+    const { nfts, loading, error } = useFetchCoreNftDetails(); // Use the custom hook for fetching NFTs
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

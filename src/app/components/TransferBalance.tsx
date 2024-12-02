@@ -6,8 +6,10 @@ import {
     Transaction,
     TransactionInstruction,
 } from "@solana/web3.js";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import isValidAddress from "../utils";
+// import Notification from "../components/Notification";
+import Notification from "./Nofitication";
 
 const TransferBalance = () => {
     const { connection } = useConnection();
@@ -16,22 +18,26 @@ const TransferBalance = () => {
     const addressRef = useRef<HTMLInputElement>(null);
     const amountRef = useRef<HTMLInputElement>(null);
 
-    if (!publicKey) return;
+    // Notification props
+    const [notify, setNotify] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [transactionSignature, setTransactionSignature] = useState<
+        string | undefined
+    >(undefined);
 
-    // Send Transaction Function
     const handleTransfer = async () => {
         const recipientAddress = addressRef.current?.value || "";
         const transferAmount = parseFloat(amountRef.current?.value || "0");
         const memo = memoRef.current?.value || "";
 
-        // Validate recipient address
+        if (!publicKey) return;
+
         if (!isValidAddress(recipientAddress)) {
             alert("Please enter a valid recipient address.");
             return;
         }
 
         try {
-            // Validate transfer amount
             if (Number.isNaN(transferAmount) || transferAmount <= 0) {
                 alert("Please enter a valid transfer amount greater than 0.");
                 return;
@@ -59,32 +65,57 @@ const TransferBalance = () => {
             }
 
             const signature = await sendTransaction(transaction, connection);
-            const confirmation = await connection.confirmTransaction(
-                signature,
-                "finalized",
-            );
-            alert(`Transaction successful! Signature: ${confirmation}`);
+            await connection.confirmTransaction(signature, "finalized");
+
+            // Set notification props for success
+            setNotificationMessage("Transaction successful!");
+            setTransactionSignature(signature);
+            setNotify(true);
         } catch (_error) {
-            alert("Transaction failed. Something went wrong.");
+            // Set notification props for failure
+            setNotificationMessage("Transaction failed. Something went wrong.");
+            setTransactionSignature(undefined);
+            setNotify(true);
         }
     };
 
     return (
-        <div>
+        <div className="flex flex-col items-center p-4">
             <input
                 type="text"
                 placeholder="Enter Recipient Address"
                 ref={addressRef}
+                className="mb-4 w-full rounded-md border px-2 py-1"
             />
             <input
                 type="number"
                 placeholder="Enter Transfer Amount"
                 ref={amountRef}
+                className="mb-4 w-full rounded-md border px-2 py-1"
             />
-            <input type="text" placeholder="Enter Memo" ref={memoRef} />
-            <button type="button" onClick={handleTransfer}>
+            <input
+                type="text"
+                placeholder="Enter Memo"
+                ref={memoRef}
+                className="mb-4 w-full rounded-md border px-2 py-1"
+            />
+            <button
+                type="button"
+                onClick={handleTransfer}
+                className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            >
                 Send Transaction
             </button>
+
+            {/* Render Notification */}
+            {notify && (
+                <Notification
+                    message={notificationMessage}
+                    transactionSignature={transactionSignature}
+                    notify={notify}
+                    onClose={() => setNotify(false)}
+                />
+            )}
         </div>
     );
 };

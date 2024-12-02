@@ -1,5 +1,6 @@
 "use client";
 
+import useFetchTokenMetadataNftDetails from "@/app/hooks/useFetchTokenMetadataNftDetails";
 import {
     mplTokenMetadata,
     TokenStandard,
@@ -12,14 +13,13 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
-import useFetchNFTDetails from "./FetchNftDetails";
 // import Image from "next/image";
 
 const TransferNftPage = () => {
     const { publicKey } = useWallet();
     const wallet = useWallet();
 
-    const { nfts, loading, error } = useFetchNFTDetails(); // Use the custom hook for fetching NFTs
+    const { nfts, loading, error } = useFetchTokenMetadataNftDetails(); // Use the custom hook for fetching NFTs
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

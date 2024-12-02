@@ -1,5 +1,6 @@
 "use client";
 
+import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     ASSOCIATED_TOKEN_PROGRAM_ID,
     createAssociatedTokenAccountInstruction,
@@ -11,7 +12,6 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
-import { TokenInfo, useTokens } from "./FetchTokens";
 
 const TransferTokenPage = () => {
     const tokens = useTokens(true); // Fetch tokens with metadata if needed

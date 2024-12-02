@@ -1,10 +1,10 @@
 "use client";
 
-import useFetchCoreNFTDetails from "./FetchCoreNftDetails";
+import useFetchCoreNftDetails from "@/app/hooks/useFetchCoreNftDetails";
 // import Image from "next/image";
 
 const DisplayCoreNftPage = () => {
-    const { nfts, loading, error } = useFetchCoreNFTDetails();
+    const { nfts, loading, error } = useFetchCoreNftDetails();
 
     return (
         <div className="p-4">

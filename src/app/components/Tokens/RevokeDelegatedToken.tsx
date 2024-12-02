@@ -2,6 +2,7 @@
 
 "use client";
 
+import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     TOKEN_2022_PROGRAM_ID,
     // createApproveInstruction,
@@ -11,7 +12,6 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
-import { TokenInfo, useTokens } from "./FetchTokens";
 
 const RevokeDelegatedToken = () => {
     const tokens = useTokens(); // Fetch tokens without metadata
