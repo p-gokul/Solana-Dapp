@@ -5,7 +5,6 @@ import { useRef } from "react";
 const AirDrop: React.FC = () => {
     const { connection } = useConnection();
     const { publicKey } = useWallet();
-    //   const [airdropAmount,setAirdropAmount]=useState<number>(1);
     const airdropAmountRef = useRef<HTMLInputElement>(null);
 
     if (!publicKey) return;
@@ -28,7 +27,6 @@ const AirDrop: React.FC = () => {
             await connection.confirmTransaction(airDropSignature);
             alert("Airdrop successful!");
         } catch (_error) {
-            // console.error("Error during airdrop", error);
             alert("Something went wrong");
         }
     };

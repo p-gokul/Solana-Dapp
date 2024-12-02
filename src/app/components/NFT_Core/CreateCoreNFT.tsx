@@ -12,10 +12,6 @@ import { useState } from "react";
 import { z } from "zod";
 import Notification from "../Nofitication";
 
-// import { useNotification } from "@/app/hooks/useNotifications";
-// import { base58 } from "@metaplex-foundation/umi/serializers";
-// import Notification from "../Nofitication";
-
 const CreateNftPageCore = () => {
     const { publicKey } = useWallet(); // Access wallet adapter
     const wallet = useWallet();

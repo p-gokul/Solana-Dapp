@@ -2,7 +2,6 @@ import { useNotification } from "@/app/hooks/useNotifications";
 import { nftTokenMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import {
     createNft,
-    // fetchDigitalAsset,
     mplTokenMetadata,
 } from "@metaplex-foundation/mpl-token-metadata";
 import { generateSigner, percentAmount } from "@metaplex-foundation/umi";
@@ -16,10 +15,6 @@ import axios from "axios";
 import { useState } from "react";
 import { z } from "zod";
 import Notification from "../Nofitication";
-
-// import { useNotification } from "@/app/hooks/useNotifications";
-// import Notification from "../Nofitication";
-// import { base58 } from "@metaplex-foundation/umi/serializers";
 
 const CreateNftPage = () => {
     const { publicKey } = useWallet(); // Access wallet adapter
