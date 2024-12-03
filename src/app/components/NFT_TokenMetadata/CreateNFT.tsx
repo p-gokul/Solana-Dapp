@@ -1,3 +1,5 @@
+"use client";
+
 import { useNotification } from "@/app/hooks/useNotifications";
 import { nftTokenMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import {
@@ -42,7 +44,7 @@ const CreateNftPage = () => {
                 return;
             }
             if (uri.trim() === "" || name.trim() === "") {
-                alert("Name or Url cannot be empty.");
+                alert("Name or URL cannot be empty.");
                 return;
             }
 
@@ -85,9 +87,7 @@ const CreateNftPage = () => {
                 ],
             }).sendAndConfirm(umi);
 
-            setStatus(
-                `NFT created successfully! Mint address: ${mint.publicKey}, Transaction: ${signature}`,
-            );
+            setStatus(`NFT created successfully! `);
 
             // Show success notification
             showNotification(
@@ -99,7 +99,9 @@ const CreateNftPage = () => {
         } catch (error: any) {
             if (error instanceof z.ZodError) {
                 alert(
-                    `Invalid metadata: ${error.errors.map((e) => e.message).join(", ")}`,
+                    `Invalid metadata: ${error.errors
+                        .map((e) => e.message)
+                        .join(", ")}`,
                 );
             } else {
                 setStatus(`Error: ${error.message}`);
@@ -110,59 +112,69 @@ const CreateNftPage = () => {
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold">Create NFT</h1>
+        <div className="flex">
+            <div className="mx-auto flex h-auto w-1/2 flex-col space-y-4 rounded-xl border bg-slate-900 p-4">
+                <div className="mx-auto text-xl">Create NFT</div>
+                <hr className="text-slate-400" />
+                <div className="space-y-4">
+                    {/* NFT Name */}
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">NFT Name:</div>
+                        <div>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter NFT Name"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
 
-            {/* Name Input */}
-            <div className="mb-4">
-                <label className="mb-1 block font-medium">NFT Name</label>
-                <input
-                    type="text"
-                    className="w-full rounded border p-2"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter NFT Name"
-                />
+                    {/* Metadata URL */}
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">Metadata URL:</div>
+                        <div>
+                            <input
+                                type="text"
+                                value={uri}
+                                onChange={(e) => setUri(e.target.value)}
+                                placeholder="Enter Metadata URI"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Seller Fee */}
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">Seller Fee Percentage:</div>
+                        <div>
+                            <input
+                                type="number"
+                                value={percent}
+                                onChange={(e) =>
+                                    setPercent(Number(e.target.value))
+                                }
+                                placeholder="Enter Seller Fee (e.g., 5 for 5%)"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleCreateNFT}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-700/50 px-4 py-3 font-medium text-white transition-colors hover:bg-slate-600"
+                        disabled={!publicKey || loading}
+                    >
+                        {loading ? "Creating NFT..." : "Create NFT"}
+                    </button>
+                </div>
+                {status && (
+                    <p className="mt-4 text-center text-gray-400">{status}</p>
+                )}
             </div>
 
-            {/* URI Input */}
-            <div className="mb-4">
-                <label className="mb-1 block font-medium">Metadata URI</label>
-                <input
-                    type="text"
-                    className="w-full rounded border p-2"
-                    value={uri}
-                    onChange={(e) => setUri(e.target.value)}
-                    placeholder="Enter Metadata URI"
-                />
-            </div>
-
-            {/* Percent Input */}
-            <div className="mb-4">
-                <label className="mb-1 block font-medium">
-                    Seller Fee Percentage
-                </label>
-                <input
-                    type="number"
-                    className="w-full rounded border p-2"
-                    value={percent}
-                    onChange={(e) => setPercent(Number(e.target.value))}
-                    placeholder="Enter Seller Fee (e.g., 5 for 5%)"
-                />
-            </div>
-
-            {/* Button to Trigger NFT Creation */}
-            <button
-                type="button"
-                onClick={handleCreateNFT}
-                className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-                disabled={!publicKey || loading}
-            >
-                {loading ? "Creating NFT..." : "Create NFT"}
-            </button>
-
-            {/* Status Message */}
-            {status && <p className="mt-4 text-gray-700">{status}</p>}
             {notify && (
                 <Notification
                     message={message}

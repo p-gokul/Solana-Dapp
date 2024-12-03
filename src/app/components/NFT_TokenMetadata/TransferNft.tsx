@@ -1,6 +1,7 @@
 "use client";
 
 import useFetchTokenMetadataNftDetails from "@/app/hooks/useFetchTokenMetadataNftDetails";
+import { useNotification } from "@/app/hooks/useNotifications";
 import {
     mplTokenMetadata,
     TokenStandard,
@@ -9,13 +10,12 @@ import {
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { walletAdapterIdentity } from "@metaplex-foundation/umi-signer-wallet-adapters";
 import { fromWeb3JsPublicKey } from "@metaplex-foundation/umi-web3js-adapters";
+import { base58 } from "@metaplex-foundation/umi/serializers";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, PublicKey } from "@solana/web3.js";
+import Image from "next/image";
 import { useState } from "react";
 import Modal from "react-modal";
-// import Image from "next/image";
-import { useNotification } from "@/app/hooks/useNotifications";
-import { base58 } from "@metaplex-foundation/umi/serializers";
 import Notification from "../Nofitication";
 
 const TransferNftPage = () => {
@@ -101,13 +101,13 @@ const TransferNftPage = () => {
                         key={index}
                         className="relative flex flex-col items-center rounded-lg border p-4 shadow"
                     >
-                        {/* <Image
-              src={nft.image}
-              alt={nft.name}
-              height={100}
-              width={100}
-              className="w-32 h-32 object-cover rounded mb-4"
-            /> */}
+                        <Image
+                            src={nft.image}
+                            alt={nft.name}
+                            height={100}
+                            width={100}
+                            className="mb-4 h-32 w-32 rounded object-cover"
+                        />
                         <h2 className="text-lg font-bold">{nft.name}</h2>
                         <p className="text-gray-600">{nft.symbol}</p>
                         <p className="mt-2 text-gray-700">{nft.description}</p>
@@ -127,47 +127,56 @@ const TransferNftPage = () => {
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 contentLabel="Transfer NFT"
-                className="mx-auto max-w-lg rounded-lg bg-white p-6 shadow-lg"
-                overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+                className="fixed inset-0 flex items-center justify-center"
+                overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-40"
             >
-                <h2 className="mb-4 text-xl font-bold">Transfer NFT</h2>
-                {selectedNFT && (
-                    <>
-                        <p className="mb-2">
-                            <strong>Name:</strong> {selectedNFT.name}
-                        </p>
-                        <p className="mb-4">
-                            <strong>Symbol:</strong> {selectedNFT.symbol}
-                        </p>
-                    </>
-                )}
-                <label className="mb-4 block">
-                    <span className="text-gray-700">Recipient Address</span>
-                    <input
-                        type="text"
-                        value={recipientAddress}
-                        onChange={(e) => setRecipientAddress(e.target.value)}
-                        className="w-full rounded border p-2"
-                        placeholder="Enter recipient's public key"
-                    />
-                </label>
-                <div className="flex justify-end space-x-4">
-                    <button
-                        type="button"
-                        onClick={closeModal}
-                        className="rounded bg-gray-500 px-4 py-2 text-white"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleTransferNFT}
-                        className="rounded bg-blue-500 px-4 py-2 text-white"
-                    >
-                        Transfer
-                    </button>
+                <div className="z-50 flex w-full max-w-md flex-col rounded-xl bg-slate-900 p-6 text-white shadow-lg">
+                    <h2 className="mx-auto mb-4 text-xl font-semibold">
+                        Transfer NFT
+                    </h2>
+                    {selectedNFT && (
+                        <>
+                            <p className="mb-2">
+                                <strong>Name:</strong> {selectedNFT.name}
+                            </p>
+                            <p className="mb-4">
+                                <strong>Symbol:</strong> {selectedNFT.symbol}
+                            </p>
+                        </>
+                    )}
+                    <label className="mb-4 block">
+                        <span className="text-sm text-gray-300">
+                            Recipient Address:
+                        </span>
+                        <input
+                            type="text"
+                            value={recipientAddress}
+                            onChange={(e) =>
+                                setRecipientAddress(e.target.value)
+                            }
+                            className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder:text-zinc-600 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                            placeholder="Enter recipient's public key"
+                        />
+                    </label>
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            onClick={handleTransferNFT}
+                            className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
+                        >
+                            Transfer
+                        </button>
+                        <button
+                            type="button"
+                            onClick={closeModal}
+                            className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </Modal>
+
             {notify && (
                 <Notification
                     message={message}

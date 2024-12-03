@@ -55,6 +55,7 @@ const useFetchTokenMetadataNftDetails = () => {
                 // Fetch metadata for each NFT
                 const nftData = await Promise.all(
                     assets.map(async (asset) => {
+                        console.log("The received asset is ", asset);
                         const response = await axios.get(asset.metadata.uri);
                         const metadata = response.data;
                         return {
@@ -63,7 +64,7 @@ const useFetchTokenMetadataNftDetails = () => {
                             description: metadata.description,
                             image: metadata.image,
                             sellerFeeBasisPoints:
-                                metadata.seller_fee_basis_points / 100, // Convert basis points to percentage
+                                asset.metadata.sellerFeeBasisPoints / 100, // Convert basis points to percentage
                             mint: asset.metadata.mint,
                         };
                     }),
