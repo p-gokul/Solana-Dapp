@@ -140,7 +140,7 @@ const LaunchToken = () => {
                 mintKeypair.publicKey,
                 associatedToken,
                 publicKey,
-                Number(initialSupply) * 10 ** 9, // Convert supply to smallest units
+                BigInt(Number(initialSupply) * 10 ** 9), // Supply in smallest units
                 [],
                 TOKEN_2022_PROGRAM_ID,
             ),
@@ -165,6 +165,17 @@ const LaunchToken = () => {
                                 ref={nameRef}
                                 type="text"
                                 placeholder="Token Name"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">Token Symbol:</div>
+                        <div>
+                            <input
+                                ref={symbolRef}
+                                type="text"
+                                placeholder="Token Symbol"
                                 className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                             />
                         </div>

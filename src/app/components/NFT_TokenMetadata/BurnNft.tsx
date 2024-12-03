@@ -16,6 +16,7 @@ import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import Image from "next/image";
 import { useState } from "react";
 import Modal from "react-modal";
+import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
 
 const BurnNftPage = () => {
@@ -25,6 +26,7 @@ const BurnNftPage = () => {
     const { nfts, loading, error } = useFetchTokenMetadataNftDetails(); // Use the custom hook for fetching NFTs
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isBurning, setIsBurning] = useState(false); // State for loader
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
 
@@ -56,6 +58,7 @@ const BurnNftPage = () => {
         }
 
         try {
+            setIsBurning(true); // Show loader
             const umi = createUmi(clusterApiUrl("devnet"));
             umi.use(walletAdapterIdentity(wallet));
             umi.use(mplTokenMetadata());
@@ -80,6 +83,8 @@ const BurnNftPage = () => {
             closeModal();
         } catch (_error) {
             alert("Failed to burn NFT. Please try again.");
+        } finally {
+            setIsBurning(false); // Hide loader
         }
     };
 
@@ -117,7 +122,7 @@ const BurnNftPage = () => {
                 ))}
             </div>
 
-            {/* Modal for Transfer */}
+            {/* Modal for Burn */}
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
@@ -142,7 +147,7 @@ const BurnNftPage = () => {
                     <div className="mb-4">
                         <p className="text-sm text-gray-300">
                             Are you sure you want to burn this NFT? This action
-                            is Irreversible.
+                            is irreversible.
                         </p>
                     </div>
                     <div className="flex justify-between">
@@ -163,6 +168,13 @@ const BurnNftPage = () => {
                     </div>
                 </div>
             </Modal>
+
+            {/* Loader */}
+            {isBurning && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <LoaderComponent />
+                </div>
+            )}
 
             {notify && (
                 <Notification

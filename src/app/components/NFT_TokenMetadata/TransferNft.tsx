@@ -16,6 +16,7 @@ import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import Image from "next/image";
 import { useState } from "react";
 import Modal from "react-modal";
+import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
 
 const TransferNftPage = () => {
@@ -25,7 +26,7 @@ const TransferNftPage = () => {
     const { nfts, loading, error } = useFetchTokenMetadataNftDetails(); // Use the custom hook for fetching NFTs
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [isTransferring, setIsTransferring] = useState(false); // State for loader
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
     const [recipientAddress, setRecipientAddress] = useState<string>("");
 
@@ -37,7 +38,6 @@ const TransferNftPage = () => {
         hideNotification,
     } = useNotification();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openModal = (nft: any) => {
         setSelectedNFT(nft);
         setIsModalOpen(true);
@@ -58,6 +58,7 @@ const TransferNftPage = () => {
         }
 
         try {
+            setIsTransferring(true); // Show loader
             const umi = createUmi(clusterApiUrl("devnet"));
             umi.use(walletAdapterIdentity(wallet));
             umi.use(mplTokenMetadata());
@@ -85,6 +86,8 @@ const TransferNftPage = () => {
             closeModal();
         } catch (_error) {
             alert("Failed to transfer NFT. Please try again.");
+        } finally {
+            setIsTransferring(false); // Hide loader
         }
     };
 
@@ -176,6 +179,13 @@ const TransferNftPage = () => {
                     </div>
                 </div>
             </Modal>
+
+            {/* Loader */}
+            {isTransferring && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <LoaderComponent />
+                </div>
+            )}
 
             {notify && (
                 <Notification

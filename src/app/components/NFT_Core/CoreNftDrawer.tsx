@@ -74,7 +74,7 @@ const CoreNftDrawer = () => {
             </div>
 
             {/* Main Content */}
-            <div className="ml-64 w-full bg-gray-100 p-4">
+            <div className="ml-64 w-full p-4">
                 <div className="content">{activeComponent}</div>
             </div>
         </div>

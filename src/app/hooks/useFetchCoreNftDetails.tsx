@@ -60,6 +60,7 @@ const useFetchCoreNftDetails = () => {
                     }),
                 );
                 setNFTs(nftData);
+                setLoading(false);
             } catch (_error) {
                 setError("Failed to fetch NFTs. Please try again.");
             }

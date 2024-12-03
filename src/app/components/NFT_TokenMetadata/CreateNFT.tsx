@@ -16,6 +16,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 import axios from "axios";
 import { useState } from "react";
 import { z } from "zod";
+import LoaderComponent from "../LoaderComponent/Loader"; // Import the Loader component
 import Notification from "../Nofitication";
 
 const CreateNftPage = () => {
@@ -94,8 +95,6 @@ const CreateNftPage = () => {
                 "NFT created successfully !!!",
                 base58.deserialize(signature)[0],
             );
-
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error instanceof z.ZodError) {
                 alert(
@@ -174,6 +173,13 @@ const CreateNftPage = () => {
                     <p className="mt-4 text-center text-gray-400">{status}</p>
                 )}
             </div>
+
+            {/* Loader */}
+            {loading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <LoaderComponent />
+                </div>
+            )}
 
             {notify && (
                 <Notification

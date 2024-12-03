@@ -1,3 +1,5 @@
+"use client";
+
 import { useNotification } from "@/app/hooks/useNotifications";
 import { nftCoreMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import { create } from "@metaplex-foundation/mpl-core";
@@ -10,10 +12,11 @@ import { clusterApiUrl } from "@solana/web3.js";
 import axios from "axios";
 import { useState } from "react";
 import { z } from "zod";
+import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
 
 const CreateNftPageCore = () => {
-    const { publicKey } = useWallet(); // Access wallet adapter
+    const { publicKey } = useWallet();
     const wallet = useWallet();
 
     // States for inputs
@@ -81,61 +84,78 @@ const CreateNftPageCore = () => {
                 "NFT created successfully !!!",
                 base58.deserialize(signature)[0],
             );
-
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if (error instanceof z.ZodError) {
                 alert(
-                    `Invalid metadata: ${error.errors.map((e) => e.message).join(", ")}`,
+                    `Invalid metadata: ${error.errors
+                        .map((e) => e.message)
+                        .join(", ")}`,
                 );
             } else {
                 setStatus(`Error: ${error.message}`);
             }
         } finally {
-            setLoading(false);
+            setTimeout(() => setLoading(false), 1000); // Fade out loader after 1s
+            setStatus("");
+            setName("");
+            setUri("");
         }
     };
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold">Create NFT</h1>
+        <div className="relative flex">
+            {/* Show Loader while loading */}
+            {loading && (
+                <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70">
+                    <LoaderComponent />
+                </div>
+            )}
+            <div className="mx-auto flex h-auto w-1/2 flex-col space-y-4 rounded-xl border bg-slate-900 p-4">
+                <div className="mx-auto text-xl font-semibold">Create NFT</div>
+                <hr className="text-slate-400" />
+                <div className="space-y-4">
+                    {/* NFT Name */}
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">NFT Name:</div>
+                        <div>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter NFT Name"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
 
-            {/* Name Input */}
-            <div className="mb-4">
-                <label className="mb-1 block font-medium">NFT Name</label>
-                <input
-                    type="text"
-                    className="w-full rounded border p-2"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter NFT Name"
-                />
+                    {/* Metadata URI */}
+                    <div className="w-full space-y-2">
+                        <div className="pl-2">Metadata URI:</div>
+                        <div>
+                            <input
+                                type="text"
+                                value={uri}
+                                onChange={(e) => setUri(e.target.value)}
+                                placeholder="Enter Metadata URI"
+                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleCreateNFT}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-700/50 px-4 py-3 font-medium text-white transition-colors hover:bg-slate-600"
+                        disabled={!publicKey || loading}
+                    >
+                        {loading ? "Creating NFT..." : "Create NFT"}
+                    </button>
+                </div>
+                {status && (
+                    <p className="mt-4 text-center text-gray-400">{status}</p>
+                )}
             </div>
 
-            {/* URI Input */}
-            <div className="mb-4">
-                <label className="mb-1 block font-medium">Metadata URI</label>
-                <input
-                    type="text"
-                    className="w-full rounded border p-2"
-                    value={uri}
-                    onChange={(e) => setUri(e.target.value)}
-                    placeholder="Enter Metadata URI"
-                />
-            </div>
-
-            {/* Button to Trigger NFT Creation */}
-            <button
-                type="button"
-                onClick={handleCreateNFT}
-                className="mt-4 rounded bg-blue-500 px-4 py-2 text-white"
-                disabled={!publicKey || loading}
-            >
-                {loading ? "Creating NFT..." : "Create NFT"}
-            </button>
-
-            {/* Status Message */}
-            {status && <p className="mt-4 text-gray-700">{status}</p>}
             {notify && (
                 <Notification
                     message={message}

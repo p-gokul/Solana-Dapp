@@ -55,7 +55,6 @@ const useFetchTokenMetadataNftDetails = () => {
                 // Fetch metadata for each NFT
                 const nftData = await Promise.all(
                     assets.map(async (asset) => {
-                        console.log("The received asset is ", asset);
                         const response = await axios.get(asset.metadata.uri);
                         const metadata = response.data;
                         return {

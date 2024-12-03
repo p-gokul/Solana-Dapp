@@ -1,3 +1,5 @@
+"use client";
+
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
     LAMPORTS_PER_SOL,
@@ -6,7 +8,7 @@ import {
     Transaction,
     TransactionInstruction,
 } from "@solana/web3.js";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNotification } from "../hooks/useNotifications";
 import isValidAddress from "../utils";
 import Notification from "./Nofitication";
@@ -18,6 +20,8 @@ const TransferBalance = () => {
     const addressRef = useRef<HTMLInputElement>(null);
     const amountRef = useRef<HTMLInputElement>(null);
 
+    const [loading, setLoading] = useState(false);
+
     const {
         notify,
         message,
@@ -26,7 +30,7 @@ const TransferBalance = () => {
         hideNotification,
     } = useNotification();
 
-    if (!publicKey) return;
+    if (!publicKey) return null;
 
     const handleTransfer = async () => {
         const recipientAddress = addressRef.current?.value || "";
@@ -45,6 +49,8 @@ const TransferBalance = () => {
                 alert("Please enter a valid transfer amount greater than 0.");
                 return;
             }
+
+            setLoading(true);
 
             const transaction = new Transaction();
             transaction.add(
@@ -72,9 +78,17 @@ const TransferBalance = () => {
 
             // Show success notification
             showNotification("Transaction successful!", signature);
-        } catch (_error) {
+
+            // Clear the input fields
+            if (addressRef.current) addressRef.current.value = "";
+            if (amountRef.current) amountRef.current.value = "";
+            if (memoRef.current) memoRef.current.value = "";
+        } catch (error) {
+            console.error("Transaction failed:", error);
             // Show failure notification
             showNotification("Transaction failed. Something went wrong.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -131,8 +145,9 @@ const TransferBalance = () => {
                         type="button"
                         onClick={handleTransfer}
                         className="mx-auto w-full items-center justify-center gap-2 rounded-lg bg-zinc-800/50 px-4 py-3 font-medium text-white transition-colors hover:bg-zinc-700/50"
+                        disabled={loading}
                     >
-                        Send Transaction
+                        {loading ? "Processing..." : "Send Transaction"}
                     </button>
                 </div>
             </div>
