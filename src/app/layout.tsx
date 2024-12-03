@@ -28,11 +28,23 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} bg-black text-white antialiased`}
             >
                 <Provider>
                     <NavBar />
-                    {children}
+
+                    <div
+                        style={{
+                            position: "relative",
+                            top: "8%",
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            overflow: "auto", // To handle scrolling if content is large
+                        }}
+                    >
+                        {children}
+                    </div>
                 </Provider>
             </body>
         </html>

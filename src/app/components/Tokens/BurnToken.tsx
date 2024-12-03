@@ -15,7 +15,7 @@ import Modal from "react-modal";
 import Notification from "../Nofitication";
 
 const BurnTokenPage = () => {
-    const tokens = useTokens(); // Fetch tokens without metadata
+    const tokens = useTokens(true); // Fetch tokens without metadata
     const { publicKey, sendTransaction } = useWallet();
     const { connection } = useConnection();
 
@@ -78,72 +78,97 @@ const BurnTokenPage = () => {
     };
 
     return (
-        <div>
-            <h2>Token Burning Page</h2>
+        <div className="flex flex-col">
+            <h2 className="mx-auto text-2xl">Token Burning Page</h2>
             {tokens.length === 0 ? (
                 <div>No tokens found.</div>
             ) : (
-                <ul>
+                <div className="grid w-full grid-cols-2">
                     {tokens.map((token) => (
-                        <li key={token.mintAddress}>
-                            <div>
-                                <strong>Mint Address:</strong>{" "}
-                                {token.mintAddress}
+                        <div
+                            className="flex justify-center rounded-xl p-6"
+                            key={token.accountPubkey}
+                        >
+                            <div className="max-w-lg space-y-2 rounded-xl bg-slate-900 p-4">
+                                <div>Name: {token.metadata?.name} </div>
+                                <div>
+                                    Symbol:
+                                    {token.metadata?.symbol || "Undefined"}
+                                </div>
+                                <div>Amount: {token.tokenAmount}</div>
+                                <div className="flex flex-row">
+                                    <div className="truncate">
+                                        Token Account Address:
+                                        {token.accountPubkey}
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => openModal(token)}
+                                    className="mx-auto rounded border bg-slate-600 px-4 py-2 text-white transition hover:bg-slate-500"
+                                >
+                                    Burn Token
+                                </button>
                             </div>
-                            <div>
-                                <strong>Token Account Address:</strong>{" "}
-                                {token.tokenAccountAddress}
-                            </div>
-                            <div>
-                                <strong>Amount:</strong> {token.tokenAmount}
-                            </div>
-                            <button
-                                onClick={() => openModal(token)}
-                                type="button"
-                            >
-                                Burn Token
-                            </button>
-                            <hr />
-                        </li>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
 
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                <div className="ml-60 mt-20">
-                    <h2>Burn Tokens</h2>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                className="fixed inset-0 flex items-center justify-center"
+                overlayClassName="fixed inset-0 bg-black/50 z-40"
+            >
+                <div className="z-50 flex w-full max-w-md flex-col space-y-4 rounded-xl bg-slate-900 p-6 text-white shadow-lg">
+                    <h2 className="mx-auto mb-4 text-xl font-semibold">
+                        Burn Tokens
+                    </h2>
+                    <hr className="text-green-300" />
+
                     {selectedToken && (
                         <>
-                            <p>
-                                <strong>Mint Address:</strong>{" "}
-                                {selectedToken.mintAddress}
+                            <p className="mb-2">
+                                <strong>Token Name:</strong>{" "}
+                                {selectedToken.metadata?.name}
                             </p>
-                            <p>
-                                <strong>
-                                    Associated Token Account Address:
-                                </strong>{" "}
-                                {selectedToken.tokenAccountAddress}
+                            <p className="mb-4">
+                                <strong>Current Supply:</strong>{" "}
+                                {selectedToken.tokenAmount}
                             </p>
-                            <label>
-                                Amount to Burn:
+                            <label className="mb-4 block">
+                                <span className="text-sm">Amount to Burn:</span>
                                 <input
                                     type="number"
                                     value={burnAmount}
                                     onChange={(e) =>
                                         setBurnAmount(e.target.value)
                                     }
+                                    className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
                                 />
                             </label>
-                            <button onClick={handleBurn} type="button">
-                                Burn Token
-                            </button>
-                            <button onClick={closeModal} type="button">
-                                Cancel
-                            </button>
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={handleBurn}
+                                    type="button"
+                                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                                >
+                                    Burn Token
+                                </button>
+                                <button
+                                    onClick={closeModal}
+                                    type="button"
+                                    className="rounded-lg bg-gray-600 px-4 py-2 text-white transition hover:bg-gray-500"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </>
                     )}
                 </div>
             </Modal>
+
             {notify && (
                 <Notification
                     message={message}

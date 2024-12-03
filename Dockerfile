@@ -6,7 +6,7 @@ WORKDIR /app/client
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install -f
 
 # Copy local code to the container
 COPY . .
@@ -19,7 +19,7 @@ WORKDIR /app/client
 
 COPY --from=builder /app/client/package*.json ./
 COPY --from=builder /app/client/tailwind.config.ts ./
-COPY --from=builder /app/client/next.config.mjs ./
+COPY --from=builder /app/client/next.config.ts ./
 COPY --from=builder /app/client/dist ./dist
 COPY --from=builder /app/client/public ./public
 COPY --from=builder /app/client/node_modules ./node_modules

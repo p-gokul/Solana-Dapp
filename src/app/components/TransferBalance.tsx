@@ -26,6 +26,8 @@ const TransferBalance = () => {
         hideNotification,
     } = useNotification();
 
+    if (!publicKey) return;
+
     const handleTransfer = async () => {
         const recipientAddress = addressRef.current?.value || "";
         const transferAmount = parseFloat(amountRef.current?.value || "0");
@@ -77,32 +79,63 @@ const TransferBalance = () => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4">
-            <input
-                type="text"
-                placeholder="Enter Recipient Address"
-                ref={addressRef}
-                className="mb-4 w-full rounded-md border px-2 py-1"
-            />
-            <input
-                type="number"
-                placeholder="Enter Transfer Amount"
-                ref={amountRef}
-                className="mb-4 w-full rounded-md border px-2 py-1"
-            />
-            <input
-                type="text"
-                placeholder="Enter Memo"
-                ref={memoRef}
-                className="mb-4 w-full rounded-md border px-2 py-1"
-            />
-            <button
-                type="button"
-                onClick={handleTransfer}
-                className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            >
-                Send Transaction
-            </button>
+        <div className="flex items-center justify-center p-4">
+            <div className="w-full max-w-lg space-y-2 rounded-xl border border-zinc-800/50 bg-zinc-900/50 p-6">
+                <div>
+                    <h1 className="mb-8 text-center text-2xl font-semibold text-white">
+                        Transfer SOL
+                    </h1>
+
+                    <hr className="text-green-400" />
+                </div>
+
+                <div className="flex flex-col space-y-4 pt-4">
+                    <div className="space-y-2">
+                        <label className="pl-2">
+                            Enter Recipient Address:{" "}
+                            <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Recipient Address"
+                            ref={addressRef}
+                            className="w-full rounded-lg border border-zinc-800 bg-black/30 px-2 py-3"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="pl-2">
+                            Enter Transfer Amount:{" "}
+                            <span className="text-red-500">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            placeholder="Enter Transfer Amount"
+                            ref={amountRef}
+                            className="mb-4 w-full rounded-lg border border-zinc-800 bg-black/30 px-2 py-3"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="pl-2">Enter Memo:</label>
+
+                        <input
+                            type="text"
+                            placeholder="Enter Memo"
+                            ref={memoRef}
+                            className="mb-4 w-full rounded-lg border border-zinc-800 bg-black/30 px-2 py-3"
+                        />
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleTransfer}
+                        className="mx-auto w-full items-center justify-center gap-2 rounded-lg bg-zinc-800/50 px-4 py-3 font-medium text-white transition-colors hover:bg-zinc-700/50"
+                    >
+                        Send Transaction
+                    </button>
+                </div>
+            </div>
 
             {/* Render Notification */}
             {notify && (

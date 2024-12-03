@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BurnCoreNFTPage from "./BurnCoreNft";
-import CreateNFTPageCore from "./CreateCoreNft";
+import CreateNftPageCore from "./CreateCoreNFT";
 import DisplayCoreNFTPage from "./DisplayCoreNft";
 import TransferCoreNFTPage from "./TransferCoreNft";
 
@@ -18,7 +18,7 @@ const CoreNftDrawer = () => {
             name: "Create NFT",
             component: (
                 <div>
-                    <CreateNFTPageCore />
+                    <CreateNftPageCore />
                 </div>
             ),
         },

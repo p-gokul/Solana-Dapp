@@ -24,10 +24,12 @@ const AccountInfo = () => {
 
     if (!publicKey) return <div>Please Connect Wallet...</div>;
     return (
-        <div className="mt-20">
-            <div>Account Details ::</div>
-            <div>Public Key :: {publicKey.toBase58()}</div>
-            <div>Balance:: {balance}</div>
+        <div className="flex w-screen">
+            <div className="mx-auto">
+                <div>Account Details ::</div>
+                <div>Public Key :: {publicKey.toBase58()}</div>
+                <div>Balance:: {balance}</div>
+            </div>
         </div>
     );
 };

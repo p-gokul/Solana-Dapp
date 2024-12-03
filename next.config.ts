@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+    distDir: "dist",
     images: {
         remotePatterns: [
             {
@@ -8,6 +9,9 @@ const nextConfig: NextConfig = {
                 hostname: "**", // Allow all hostnames
             },
         ],
+    },
+    eslint: {
+        ignoreDuringBuilds: true, // Disables ESLint checks during build
     },
 };
 

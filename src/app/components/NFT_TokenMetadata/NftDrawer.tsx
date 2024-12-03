@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import BurnNFTPage from "./BurnNft";
-import CreateNFTPage from "./CreateNft";
+import CreateNftPage from "./CreateNFT";
 import DisplayNFTPage from "./DisplayNft";
 import TransferNFTPage from "./TransferNft";
 
@@ -19,7 +19,7 @@ const NftDrawer = () => {
             name: "Create NFT",
             component: (
                 <div>
-                    Create NFT Page <CreateNFTPage />
+                    Create NFT Page <CreateNftPage />
                 </div>
             ),
         },

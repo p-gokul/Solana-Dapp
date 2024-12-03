@@ -18,10 +18,10 @@ const Drawer = () => {
             name: "Delegate Token",
             component: (
                 <div className="flex h-full w-full">
-                    <div className="w-1/2 p-4">
+                    <div className="w-2/3 p-4">
                         <DelegateTokenPage />
                     </div>
-                    <div className="w-1/2 p-4">
+                    <div className="w-1/3 p-4">
                         <DelegationDetails />
                     </div>
                 </div>
@@ -44,7 +44,7 @@ const Drawer = () => {
     return (
         <div className="mt-20 flex h-screen">
             {/* Sidebar */}
-            <div className="fixed left-0 top-0 z-40 mt-20 h-screen w-64 bg-gray-50 dark:bg-gray-800">
+            <div className="fixed left-0 top-0 z-40 mt-20 h-screen w-64">
                 <div className="h-full overflow-y-auto px-3 py-4">
                     <ul className="space-y-2 font-medium">
                         {menuItems.map((item) => (
@@ -65,7 +65,7 @@ const Drawer = () => {
             </div>
 
             {/* Main Content */}
-            <div className="ml-64 w-full bg-gray-100 p-4">
+            <div className="ml-64 w-full p-4">
                 <div className="content">{activeComponent}</div>
             </div>
         </div>
