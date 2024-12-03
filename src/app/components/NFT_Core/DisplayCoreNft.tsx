@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchCoreNftDetails from "@/app/hooks/useFetchCoreNftDetails";
-// import Image from "next/image";
+import Image from "next/image";
 
 const DisplayCoreNftPage = () => {
     const { nfts, loading, error } = useFetchCoreNftDetails();
@@ -19,13 +19,13 @@ const DisplayCoreNftPage = () => {
                         key={index}
                         className="flex flex-col items-center rounded-lg border p-4 shadow"
                     >
-                        {/* <Image
-              src={nft.image}
-              alt={nft.name}
-              height={100}
-              width={100}
-              className="w-32 h-32 object-cover rounded mb-4"
-            /> */}
+                        <Image
+                            src={nft.image}
+                            alt={nft.name}
+                            height={100}
+                            width={100}
+                            className="mb-4 h-32 w-32 rounded object-cover"
+                        />
                         <h2 className="text-lg font-bold">{nft.name}</h2>
                         <p className="text-gray-600">{nft.symbol}</p>
                         <p className="mt-2 text-gray-700">{nft.description}</p>

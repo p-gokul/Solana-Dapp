@@ -1,6 +1,6 @@
 services:
     solana-dapp:
-        build: .
+        image: gokulpant/solana-dapp:v1
         container_name: solana-dapp
         ports:
             - "3000:3000"

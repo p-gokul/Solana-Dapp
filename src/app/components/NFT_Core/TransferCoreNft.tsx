@@ -10,6 +10,7 @@ import { fromWeb3JsPublicKey } from "@metaplex-foundation/umi-web3js-adapters";
 import { base58 } from "@metaplex-foundation/umi/serializers";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { clusterApiUrl, PublicKey } from "@solana/web3.js";
+import Image from "next/image";
 import { useState } from "react";
 import Modal from "react-modal";
 import LoaderComponent from "../LoaderComponent/Loader";
@@ -103,6 +104,13 @@ const TransferCoreNftPage = () => {
                         key={index}
                         className="relative flex flex-col items-center rounded-lg border p-4 shadow"
                     >
+                        <Image
+                            src={nft.image}
+                            alt={nft.name}
+                            height={100}
+                            width={100}
+                            className="mb-4 h-32 w-32 rounded object-cover"
+                        />
                         <h2 className="text-lg font-bold">{nft.name}</h2>
                         <p className="text-gray-600">
                             {nft.symbol ? nft.symbol : "NFT Symbol"}
