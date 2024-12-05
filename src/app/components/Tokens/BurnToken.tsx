@@ -98,8 +98,7 @@ const BurnTokenPage = () => {
                                 <div>Amount: {token.tokenAmount}</div>
                                 <div className="flex flex-row">
                                     <div className="truncate">
-                                        Token Account Address:
-                                        {token.accountPubkey}
+                                        {`Token Account Address: ${token.accountPubkey}`}
                                     </div>
                                 </div>
                                 <button

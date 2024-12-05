@@ -36,8 +36,7 @@ const DisplayTokenPage = () => {
                             <div>Amount: {token.tokenAmount}</div>
                             <div className="flex flex-row">
                                 <div className="truncate">
-                                    Token Account Address:
-                                    {token.accountPubkey}
+                                    Token Account Address: {token.accountPubkey}
                                 </div>
                                 <button
                                     type="button"
@@ -54,8 +53,7 @@ const DisplayTokenPage = () => {
                             </div>
                             <div className="flex flex-row">
                                 <div className="truncate">
-                                    Mint Address:
-                                    {token.mintAddress}
+                                    Mint Address: {token.mintAddress}
                                 </div>
                                 <button
                                     type="button"
