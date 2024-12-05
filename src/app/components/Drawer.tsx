@@ -40,21 +40,27 @@ const Drawer = () => {
     const [activeComponent, setActiveComponent] = useState(
         menuItems[0].component,
     );
+    const [activeItem, setActiveItem] = useState(menuItems[0].name);
 
     return (
         <div className="mt-20 flex h-screen">
             {/* Sidebar */}
-            <div className="fixed left-0 top-0 z-40 mt-20 h-screen w-64">
+            <div className="fixed left-0 top-0 z-40 mt-20 h-screen w-64 bg-[#303841]">
                 <div className="h-full overflow-y-auto px-3 py-4">
                     <ul className="space-y-2 font-medium">
                         {menuItems.map((item) => (
                             <li key={item.name}>
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setActiveComponent(item.component)
-                                    }
-                                    className="group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    onClick={() => {
+                                        setActiveComponent(item.component);
+                                        setActiveItem(item.name);
+                                    }}
+                                    className={`group flex w-full items-center rounded-lg p-2 text-white transition-colors ${
+                                        activeItem === item.name
+                                            ? "bg-[#1f2727]"
+                                            : "hover:bg-gray-500"
+                                    }`}
                                 >
                                     <span className="ms-3">{item.name}</span>
                                 </button>

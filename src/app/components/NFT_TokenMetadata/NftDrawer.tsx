@@ -44,6 +44,7 @@ const NftDrawer = () => {
     const [activeComponent, setActiveComponent] = useState(
         menuItems[0].component,
     );
+    const [activeItem, setActiveItem] = useState(menuItems[0].name);
 
     return (
         <div className="mt-20 flex h-screen">
@@ -61,10 +62,15 @@ const NftDrawer = () => {
                             <li key={index}>
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setActiveComponent(item.component)
-                                    }
-                                    className="group flex w-full items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    onClick={() => {
+                                        setActiveComponent(item.component);
+                                        setActiveItem(item.name);
+                                    }}
+                                    className={`group flex w-full items-center rounded-lg p-2 text-white transition-colors ${
+                                        activeItem === item.name
+                                            ? "bg-[#131717]"
+                                            : "hover:bg-gray-500"
+                                    }`}
                                 >
                                     <span className="ms-3">{item.name}</span>
                                 </button>

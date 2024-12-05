@@ -6,6 +6,7 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
     // Array of links
@@ -14,6 +15,8 @@ export default function NavBar() {
         { href: "/nft-token-metadata", label: "NFT ( MPL - Token Metadata )" },
         { href: "/nft-core", label: "NFT ( MPL - Core )" },
     ];
+    // Get the current pathname
+    const pathname = usePathname();
 
     return (
         <motion.header
@@ -38,7 +41,11 @@ export default function NavBar() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className="rounded-2xl bg-[#32373a] p-3 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-900 hover:text-white"
+                            className={`rounded-2xl p-3 text-sm font-medium transition-colors ${
+                                pathname === link.href
+                                    ? "bg-gray-900 text-white" // Highlight active link
+                                    : "bg-[#32373a] text-gray-300 hover:bg-zinc-800 hover:text-white"
+                            }`}
                         >
                             {link.label}
                         </Link>
