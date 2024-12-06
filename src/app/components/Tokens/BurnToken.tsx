@@ -13,6 +13,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const BurnTokenPage = () => {
     const tokens = useTokens(true); // Fetch tokens without metadata
@@ -101,13 +102,13 @@ const BurnTokenPage = () => {
                                         {`Token Account Address: ${token.accountPubkey}`}
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
+                                <GenericButton
+                                    actionType="Normal"
                                     onClick={() => openModal(token)}
-                                    className="mx-auto rounded border bg-slate-600 px-4 py-2 text-white transition hover:bg-slate-500"
+                                    param={token}
                                 >
                                     Burn Token
-                                </button>
+                                </GenericButton>
                             </div>
                         </div>
                     ))}
@@ -148,20 +149,18 @@ const BurnTokenPage = () => {
                                 />
                             </label>
                             <div className="flex justify-between">
-                                <button
+                                <GenericButton
                                     onClick={handleBurn}
-                                    type="button"
-                                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                                    actionType="Burn"
                                 >
-                                    Burn Token
-                                </button>
-                                <button
+                                    Burn
+                                </GenericButton>
+                                <GenericButton
                                     onClick={closeModal}
-                                    type="button"
-                                    className="rounded-lg bg-gray-600 px-4 py-2 text-white transition hover:bg-gray-500"
+                                    actionType="Cancel"
                                 >
                                     Cancel
-                                </button>
+                                </GenericButton>
                             </div>
                         </>
                     )}

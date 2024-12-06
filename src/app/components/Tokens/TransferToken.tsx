@@ -14,6 +14,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const TransferTokenPage = () => {
     const tokens = useTokens(true); // Fetch tokens with metadata if needed
@@ -148,13 +149,13 @@ const TransferTokenPage = () => {
                                         {`Token Account Address: ${token.accountPubkey}`}
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
+                                <GenericButton
                                     onClick={() => openModal(token)}
-                                    className="mx-auto rounded border bg-slate-600 px-4 py-2 text-white transition hover:bg-slate-500"
+                                    actionType="Transfer"
+                                    param={token}
                                 >
                                     Transfer Token
-                                </button>
+                                </GenericButton>
                             </div>
                         </div>
                     ))}
@@ -211,20 +212,18 @@ const TransferTokenPage = () => {
                                 />
                             </label>
                             <div className="flex justify-between">
-                                <button
+                                <GenericButton
                                     onClick={handleTransfer}
-                                    type="button"
-                                    className="rounded-lg bg-green-600 px-4 py-2 text-white transition hover:bg-green-500"
+                                    actionType="Transfer"
                                 >
-                                    Transfer Token
-                                </button>
-                                <button
+                                    Transfer
+                                </GenericButton>
+                                <GenericButton
                                     onClick={closeModal}
-                                    type="button"
-                                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                                    actionType="Cancel"
                                 >
                                     Cancel
-                                </button>
+                                </GenericButton>
                             </div>
                         </>
                     )}

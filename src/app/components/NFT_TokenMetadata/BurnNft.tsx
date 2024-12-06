@@ -18,6 +18,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const BurnNftPage = () => {
     const { publicKey } = useWallet();
@@ -111,13 +112,13 @@ const BurnNftPage = () => {
                         <h2 className="text-lg font-bold">{nft.name}</h2>
                         <p className="text-gray-600">{nft.symbol}</p>
                         <p className="mt-2 text-gray-700">{nft.description}</p>
-                        <button
-                            type="button"
+                        <GenericButton
                             onClick={() => openModal(nft)}
-                            className="bottom-4 right-4 rounded bg-blue-500 px-4 py-2 text-white"
+                            actionType="Normal"
+                            param={nft}
                         >
                             Burn NFT
-                        </button>
+                        </GenericButton>
                     </div>
                 ))}
             </div>
@@ -151,20 +152,15 @@ const BurnNftPage = () => {
                         </p>
                     </div>
                     <div className="flex justify-between">
-                        <button
-                            type="button"
+                        <GenericButton
                             onClick={handleBurnNFT}
-                            className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
+                            actionType="Burn"
                         >
                             Burn
-                        </button>
-                        <button
-                            type="button"
-                            onClick={closeModal}
-                            className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
-                        >
+                        </GenericButton>
+                        <GenericButton onClick={closeModal} actionType="Cancel">
                             Cancel
-                        </button>
+                        </GenericButton>
                     </div>
                 </div>
             </Modal>

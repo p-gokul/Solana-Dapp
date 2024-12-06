@@ -11,6 +11,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const MintTokenPage = () => {
     const tokens = useTokens(true); // Fetch tokens with metadata
@@ -98,13 +99,13 @@ const MintTokenPage = () => {
                                         {`Token Account Address: ${token.accountPubkey}`}
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
+                                <GenericButton
                                     onClick={() => openModal(token)}
-                                    className="mx-auto rounded-xl border bg-slate-600 px-4 py-2 text-white transition hover:bg-slate-500"
+                                    actionType="Mint"
+                                    param={token}
                                 >
                                     Mint Token
-                                </button>
+                                </GenericButton>
                             </div>
                         </div>
                     ))}
@@ -148,20 +149,18 @@ const MintTokenPage = () => {
                                 />
                             </label>
                             <div className="flex justify-between">
-                                <button
+                                <GenericButton
                                     onClick={handleMint}
-                                    type="button"
-                                    className="rounded-lg bg-green-600 px-4 py-2 text-white transition hover:bg-green-500"
+                                    actionType="Mint"
                                 >
-                                    Mint Token
-                                </button>
-                                <button
+                                    Mint
+                                </GenericButton>
+                                <GenericButton
                                     onClick={closeModal}
-                                    type="button"
-                                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                                    actionType="Cancel"
                                 >
                                     Cancel
-                                </button>
+                                </GenericButton>
                             </div>
                         </>
                     )}

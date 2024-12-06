@@ -14,6 +14,7 @@ import { useState } from "react";
 import { z } from "zod";
 import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 import InputField from "../UI/Input";
 
 const CreateNftPageCore = () => {
@@ -128,14 +129,14 @@ const CreateNftPageCore = () => {
                         placeholder="Enter Metadata URI"
                         label={"NFT Name"}
                     />
-                    <button
-                        type="button"
+                    <GenericButton
                         onClick={handleCreateNFT}
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-700/50 px-4 py-3 font-medium text-white transition-colors hover:bg-slate-600"
+                        fullWidth
                         disabled={!publicKey || loading}
+                        actionType="Create"
                     >
                         {loading ? "Creating NFT..." : "Create NFT"}
-                    </button>
+                    </GenericButton>
                 </div>
                 {status && (
                     <p className="mt-4 text-center text-gray-400">{status}</p>

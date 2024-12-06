@@ -19,6 +19,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Keypair, SystemProgram, Transaction } from "@solana/web3.js";
 import { useRef } from "react";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 import InputField from "../UI/Input";
 
 const LaunchToken = () => {
@@ -189,13 +190,13 @@ const LaunchToken = () => {
                             label="Initial Supply"
                         />
                     </div>
-                    <button
+                    <GenericButton
                         onClick={handleCreateToken}
-                        type="button"
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-700/50 px-4 py-3 font-medium text-white transition-colors hover:bg-slate-600"
+                        fullWidth
+                        actionType="Create"
                     >
                         Create a Token
-                    </button>
+                    </GenericButton>
                 </div>
             </div>
 

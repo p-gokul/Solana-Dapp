@@ -14,6 +14,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { useState } from "react";
 import Modal from "react-modal";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const RevokeDelegatedToken = () => {
     const tokens = useTokens(true); // Fetch tokens without metadata
@@ -99,13 +100,13 @@ const RevokeDelegatedToken = () => {
                                         {`Token Account Address: ${token.accountPubkey}`}
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
+                                <GenericButton
                                     onClick={() => openModal(token)}
-                                    className="mx-auto rounded border bg-slate-600 px-4 py-2 text-white transition hover:bg-slate-500"
+                                    actionType="RevokeDelegate"
+                                    param={token}
                                 >
                                     Revoke Delegated Token
-                                </button>
+                                </GenericButton>
                             </div>
                         </div>
                     ))}
@@ -135,20 +136,18 @@ const RevokeDelegatedToken = () => {
                                 {selectedToken.metadata?.symbol || "Undefined"}
                             </p>
                             <div className="flex justify-between">
-                                <button
-                                    type="button"
+                                <GenericButton
                                     onClick={handleRevokeDelegate}
-                                    className="rounded-lg bg-yellow-600 px-4 py-2 text-white transition hover:bg-yellow-500"
+                                    actionType="RevokeDelegate"
                                 >
                                     Revoke Delegate
-                                </button>
-                                <button
-                                    type="button"
+                                </GenericButton>
+                                <GenericButton
                                     onClick={closeModal}
-                                    className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                                    actionType="Cancel"
                                 >
                                     Cancel
-                                </button>
+                                </GenericButton>
                             </div>
                         </>
                     )}

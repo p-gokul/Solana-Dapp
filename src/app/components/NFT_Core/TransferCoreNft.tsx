@@ -15,6 +15,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
+import GenericButton from "../UI/Button";
 
 const TransferCoreNftPage = () => {
     const wallet = useWallet();
@@ -120,13 +121,13 @@ const TransferCoreNftPage = () => {
                                 ? nft.description
                                 : "NFT Description"}
                         </p>
-                        <button
-                            type="button"
+                        <GenericButton
                             onClick={() => openModal(nft)}
-                            className="bottom-4 right-4 rounded bg-blue-500 px-4 py-2 text-white"
+                            actionType="Transfer"
+                            param={nft}
                         >
                             Transfer
-                        </button>
+                        </GenericButton>
                     </div>
                 ))}
             </div>
@@ -168,22 +169,20 @@ const TransferCoreNftPage = () => {
                         />
                     </label>
                     <div className="flex justify-between">
-                        <button
-                            type="button"
+                        <GenericButton
                             onClick={handleTransferNFT}
-                            className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-500"
+                            actionType="Transfer"
                             disabled={isTransferring}
                         >
                             Transfer
-                        </button>
-                        <button
-                            type="button"
+                        </GenericButton>
+                        <GenericButton
                             onClick={closeModal}
-                            className="rounded-lg bg-red-600 px-4 py-2 text-white transition hover:bg-red-500"
+                            actionType="Cancel"
                             disabled={isTransferring}
                         >
                             Cancel
-                        </button>
+                        </GenericButton>
                     </div>
                 </div>
             </Modal>
