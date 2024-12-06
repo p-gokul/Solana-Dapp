@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { nftCoreMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import { create } from "@metaplex-foundation/mpl-core";
 import { generateSigner } from "@metaplex-foundation/umi";
@@ -86,7 +86,7 @@ const CreateNftPageCore = () => {
                 "NFT created successfully !!!",
                 base58.deserialize(signature)[0],
             );
-        } catch (error: any) {
+        } catch (error) {
             if (error instanceof z.ZodError) {
                 alert(
                     `Invalid metadata: ${error.errors
@@ -94,7 +94,7 @@ const CreateNftPageCore = () => {
                         .join(", ")}`,
                 );
             } else {
-                setStatus(`Error: ${error.message}`);
+                setStatus(`Error: ${error}`);
             }
         } finally {
             setTimeout(() => setLoading(false), 1000); // Fade out loader after 1s
@@ -120,14 +120,14 @@ const CreateNftPageCore = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Enter NFT Name"
-                        label={"NFT Name"}
+                        label="NFT Name"
                     />
                     <InputField
                         type="text"
                         value={uri}
                         onChange={(e) => setUri(e.target.value)}
                         placeholder="Enter Metadata URI"
-                        label={"NFT Name"}
+                        label="NFT Name"
                     />
                     <GenericButton
                         onClick={handleCreateNFT}

@@ -36,6 +36,7 @@ const Notification: React.FC<NotificationProps> = ({
             <div className="mb-2 flex items-center justify-between">
                 <span>{message}</span>
                 <button
+                    type="button"
                     className="font-bold text-white"
                     onClick={() => {
                         setIsVisible(false);

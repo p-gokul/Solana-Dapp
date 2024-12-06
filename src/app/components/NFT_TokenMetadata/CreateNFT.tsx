@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { nftTokenMetadataSchema } from "@/app/schemas/nftMetadataSchema";
 import {
     createNft,
@@ -97,7 +97,7 @@ const CreateNftPage = () => {
                 "NFT created successfully !!!",
                 base58.deserialize(signature)[0],
             );
-        } catch (error: any) {
+        } catch (error) {
             if (error instanceof z.ZodError) {
                 alert(
                     `Invalid metadata: ${error.errors
@@ -105,7 +105,7 @@ const CreateNftPage = () => {
                         .join(", ")}`,
                 );
             } else {
-                setStatus(`Error: ${error.message}`);
+                setStatus(`Error: ${error}`);
             }
         } finally {
             setLoading(false);

@@ -9,7 +9,7 @@ import {
     TransactionInstruction,
 } from "@solana/web3.js";
 import { useRef, useState } from "react";
-import { useNotification } from "../hooks/useNotifications";
+import useNotification from "../hooks/useNotifications";
 import isValidAddress from "../utils";
 import Notification from "./Nofitication";
 
@@ -83,8 +83,7 @@ const TransferBalance = () => {
             if (addressRef.current) addressRef.current.value = "";
             if (amountRef.current) amountRef.current.value = "";
             if (memoRef.current) memoRef.current.value = "";
-        } catch (error) {
-            console.error("Transaction failed:", error);
+        } catch (_error) {
             // Show failure notification
             showNotification("Transaction failed. Something went wrong.");
         } finally {

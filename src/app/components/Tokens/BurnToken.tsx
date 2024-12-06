@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     TOKEN_2022_PROGRAM_ID,

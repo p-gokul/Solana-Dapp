@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useNotification = () => {
+const useNotification = () => {
     const [notify, setNotify] = useState(false);
     const [message, setMessage] = useState("");
     const [transactionSignature, setTransactionSignature] = useState<
@@ -25,3 +25,5 @@ export const useNotification = () => {
         hideNotification,
     };
 };
+
+export default useNotification;

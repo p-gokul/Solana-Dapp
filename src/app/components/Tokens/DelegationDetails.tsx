@@ -2,11 +2,13 @@ import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { useState } from "react";
 
 const DelegationDetails = () => {
-    const [delegationDetails, setDelegationDetails] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [delegateAddress, setDelegateAddress] = useState<string>("");
     const [hasSearched, setHasSearched] = useState<boolean>(false);
+
+    // eslint-disable-next-line
+    const [delegationDetails, setDelegationDetails] = useState<any[]>([]);
 
     const findDelegate = async () => {
         setLoading(true);
@@ -46,8 +48,8 @@ const DelegationDetails = () => {
             }
 
             setDelegationDetails(json.result.value);
-        } catch (err: any) {
-            setError(err.message || "An unexpected error occurred");
+        } catch (_err) {
+            setError("An unexpected error occurred");
         } finally {
             setLoading(false);
         }

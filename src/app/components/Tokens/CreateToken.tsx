@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import isValidAddress from "@/app/utils";
 import {
     createAssociatedTokenAccountInstruction,

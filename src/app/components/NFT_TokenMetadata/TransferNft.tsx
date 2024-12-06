@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchTokenMetadataNftDetails from "@/app/hooks/useFetchTokenMetadataNftDetails";
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import {
     mplTokenMetadata,
     TokenStandard,
@@ -28,6 +28,8 @@ const TransferNftPage = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTransferring, setIsTransferring] = useState(false); // State for loader
+
+    // eslint-disable-next-line
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
     const [recipientAddress, setRecipientAddress] = useState<string>("");
 
@@ -39,6 +41,7 @@ const TransferNftPage = () => {
         hideNotification,
     } = useNotification();
 
+    // eslint-disable-next-line
     const openModal = (nft: any) => {
         setSelectedNFT(nft);
         setIsModalOpen(true);

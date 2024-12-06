@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchCoreNftDetails from "@/app/hooks/useFetchCoreNftDetails";
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { burn, fetchAsset } from "@metaplex-foundation/mpl-core";
 import { publicKey } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";

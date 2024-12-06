@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { TokenInfo, useTokens } from "@/app/hooks/useTokens";
 import {
     ASSOCIATED_TOKEN_PROGRAM_ID,

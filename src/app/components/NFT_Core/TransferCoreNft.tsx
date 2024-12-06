@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchCoreNftDetails from "@/app/hooks/useFetchCoreNftDetails";
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import { transferV1 } from "@metaplex-foundation/mpl-core";
 import { publicKey } from "@metaplex-foundation/umi";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
@@ -23,6 +23,7 @@ const TransferCoreNftPage = () => {
     const { nfts, loading, error } = useFetchCoreNftDetails(); // Use the custom hook for fetching NFTs
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // eslint-disable-next-line
     const [selectedNFT, setSelectedNFT] = useState<any>(null); // Selected NFT for transfer
     const [recipientAddress, setRecipientAddress] = useState<string>("");
     const [isTransferring, setIsTransferring] = useState(false); // State for transfer loader
@@ -35,6 +36,7 @@ const TransferCoreNftPage = () => {
         hideNotification,
     } = useNotification();
 
+    // eslint-disable-next-line
     const openModal = (nft: any) => {
         setSelectedNFT(nft);
         setIsModalOpen(true);

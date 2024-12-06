@@ -45,11 +45,11 @@ const GenericButton = <T,>({
             break;
         case "Delegate":
             bgColor = "bg-purple-600";
-            hoverColor = "hover:bg-purple-500";
+            hoverColor = "hover:bg-purple-700";
             break;
         case "RevokeDelegate":
-            bgColor = "bg-amber-600";
-            hoverColor = "hover:bg-amber-500";
+            bgColor = "bg-[#5f6769]";
+            hoverColor = "hover:bg-[#7fa99b]";
             break;
         case "Mint":
             bgColor = "bg-lime-600";

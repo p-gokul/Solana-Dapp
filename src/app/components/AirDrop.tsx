@@ -79,6 +79,7 @@ const AirDrop: React.FC = () => {
                                     {publicKey.toBase58()}
                                 </span>
                                 <button
+                                    type="button"
                                     onClick={copyAddress}
                                     className="ml-2 text-zinc-500 transition-colors hover:text-white"
                                 >
@@ -99,6 +100,7 @@ const AirDrop: React.FC = () => {
                                     {showBalance ? balance : "••••••••••••••"}
                                 </span>
                                 <button
+                                    type="button"
                                     onClick={() => setShowBalance(!showBalance)}
                                     className="ml-2 text-zinc-500 transition-colors hover:text-white"
                                 >
@@ -128,6 +130,7 @@ const AirDrop: React.FC = () => {
 
                         {/* Airdrop Button */}
                         <button
+                            type="button"
                             className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-800/50 px-4 py-3 font-medium text-white transition-colors hover:bg-zinc-700/50"
                             onClick={requestAirDrop}
                         >

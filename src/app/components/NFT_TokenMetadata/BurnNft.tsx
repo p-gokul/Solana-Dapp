@@ -1,7 +1,7 @@
 "use client";
 
 import useFetchTokenMetadataNftDetails from "@/app/hooks/useFetchTokenMetadataNftDetails";
-import { useNotification } from "@/app/hooks/useNotifications";
+import useNotification from "@/app/hooks/useNotifications";
 import {
     burnV1,
     mplTokenMetadata,

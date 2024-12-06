@@ -38,6 +38,9 @@
         "react/no-array-index-key": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "no-new": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        " react/self-closing-comp": "off",
+        "react/self-closing-comp": "off",
+        "react/require-default-props": "off"
     }
 }
