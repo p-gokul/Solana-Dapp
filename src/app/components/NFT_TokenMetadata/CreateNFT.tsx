@@ -18,6 +18,7 @@ import { useState } from "react";
 import { z } from "zod";
 import LoaderComponent from "../LoaderComponent/Loader"; // Import the Loader component
 import Notification from "../Nofitication";
+import InputField from "../UI/Input";
 
 const CreateNftPage = () => {
     const { publicKey } = useWallet(); // Access wallet adapter
@@ -118,46 +119,35 @@ const CreateNftPage = () => {
                 <div className="space-y-4">
                     {/* NFT Name */}
                     <div className="w-full space-y-2">
-                        <div className="pl-2">NFT Name:</div>
-                        <div>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Enter NFT Name"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Enter NFT name"
+                            label="NFT Name"
+                        />
                     </div>
 
                     {/* Metadata URL */}
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Metadata URL:</div>
-                        <div>
-                            <input
-                                type="text"
-                                value={uri}
-                                onChange={(e) => setUri(e.target.value)}
-                                placeholder="Enter Metadata URI"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            type="text"
+                            value={uri}
+                            onChange={(e) => setUri(e.target.value)}
+                            placeholder="Enter Metadata Uri"
+                            label="Metadata Uri"
+                        />
                     </div>
 
                     {/* Seller Fee */}
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Seller Fee Percentage:</div>
-                        <div>
-                            <input
-                                type="number"
-                                value={percent}
-                                onChange={(e) =>
-                                    setPercent(Number(e.target.value))
-                                }
-                                placeholder="Enter Seller Fee (e.g., 5 for 5%)"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            type="number"
+                            value={percent}
+                            onChange={(e) => setPercent(Number(e.target.value))}
+                            placeholder="Enter Seller Fee (e.g., 5 for 5%)"
+                            label="Seller Fee"
+                        />
                     </div>
 
                     <button

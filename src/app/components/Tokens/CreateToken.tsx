@@ -19,8 +19,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Keypair, SystemProgram, Transaction } from "@solana/web3.js";
 import { useRef } from "react";
 import Notification from "../Nofitication";
-// import { useNotification } from "@/app/hooks/useNotifications";
-// import Notification from "../Nofitication";
+import InputField from "../UI/Input";
 
 const LaunchToken = () => {
     const { connection } = useConnection();
@@ -159,48 +158,36 @@ const LaunchToken = () => {
                 <hr className="text-slate-400" />
                 <div className="space-y-4">
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Token Name:</div>
-                        <div>
-                            <input
-                                ref={nameRef}
-                                type="text"
-                                placeholder="Token Name"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            ref={nameRef}
+                            type="text"
+                            placeholder="Token Name"
+                            label="Token Name"
+                        />
                     </div>
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Token Symbol:</div>
-                        <div>
-                            <input
-                                ref={symbolRef}
-                                type="text"
-                                placeholder="Token Symbol"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            ref={symbolRef}
+                            type="text"
+                            placeholder="Token Symbol"
+                            label="Token Symbol"
+                        />
                     </div>
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Metadata URL:</div>
-                        <div>
-                            <input
-                                placeholder="Metadata Url"
-                                type="text"
-                                ref={uriRef}
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            ref={uriRef}
+                            type="text"
+                            placeholder="Metadata URL"
+                            label="Metadata Uri"
+                        />
                     </div>
                     <div className="w-full space-y-2">
-                        <div className="pl-2">Initial Supply:</div>
-                        <div>
-                            <input
-                                ref={supplyRef}
-                                type="number"
-                                placeholder="Initial Supply"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
+                        <InputField
+                            ref={supplyRef}
+                            type="number"
+                            placeholder="Initial supply"
+                            label="Initial Supply"
+                        />
                     </div>
                     <button
                         onClick={handleCreateToken}
@@ -225,17 +212,3 @@ const LaunchToken = () => {
 };
 
 export default LaunchToken;
-
-{
-    /* <input ref={nameRef} type="text" placeholder="Token Name" />
-            <input ref={symbolRef} type="text" placeholder="Token Symbol" />
-            <input
-                ref={uriRef}
-                type="text"
-                placeholder="Image URL (Metadata URI)"
-            />
-            <input ref={supplyRef} type="number" placeholder="Initial Supply" />
-            <button onClick={handleCreateToken} type="button">
-                Create a Token
-            </button> */
-}

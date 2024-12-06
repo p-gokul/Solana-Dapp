@@ -14,6 +14,7 @@ import { useState } from "react";
 import { z } from "zod";
 import LoaderComponent from "../LoaderComponent/Loader";
 import Notification from "../Nofitication";
+import InputField from "../UI/Input";
 
 const CreateNftPageCore = () => {
     const { publicKey } = useWallet();
@@ -104,7 +105,6 @@ const CreateNftPageCore = () => {
 
     return (
         <div className="relative flex">
-            {/* Show Loader while loading */}
             {loading && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70">
                     <LoaderComponent />
@@ -114,34 +114,20 @@ const CreateNftPageCore = () => {
                 <div className="mx-auto text-xl font-semibold">Create NFT</div>
                 <hr className="text-slate-400" />
                 <div className="space-y-4">
-                    {/* NFT Name */}
-                    <div className="w-full space-y-2">
-                        <div className="pl-2">NFT Name:</div>
-                        <div>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Enter NFT Name"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Metadata URI */}
-                    <div className="w-full space-y-2">
-                        <div className="pl-2">Metadata URI:</div>
-                        <div>
-                            <input
-                                type="text"
-                                value={uri}
-                                onChange={(e) => setUri(e.target.value)}
-                                placeholder="Enter Metadata URI"
-                                className="w-full flex-1 rounded-lg border border-zinc-800 bg-black/30 px-4 py-2.5 text-white placeholder:text-zinc-600 focus:border-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                            />
-                        </div>
-                    </div>
-
+                    <InputField
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter NFT Name"
+                        label={"NFT Name"}
+                    />
+                    <InputField
+                        type="text"
+                        value={uri}
+                        onChange={(e) => setUri(e.target.value)}
+                        placeholder="Enter Metadata URI"
+                        label={"NFT Name"}
+                    />
                     <button
                         type="button"
                         onClick={handleCreateNFT}
