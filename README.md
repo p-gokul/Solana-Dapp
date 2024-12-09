@@ -2,8 +2,6 @@
 
 A Solana Dapp touching all the general and edge operations of the NFTs. This project is designed to understand the NFTs in detail, various NFT creation methodologies and their operations. It also includes the operations with the NFT Collections, cNFTs and pNFTs.
 
----
-
 ## Table of Contents
 
 - [Features](#features)
@@ -11,8 +9,6 @@ A Solana Dapp touching all the general and edge operations of the NFTs. This pro
 - [Installation](#installation)
 
 ## Features
-
----
 
 - **Spl-Token-2022 Token Operations:**  
   Create Token, Display Token, Mint Token, Transfer Token, Delegate Token, Revoke Delegated Token, Delegation Information, Burn Tokens
@@ -24,8 +20,6 @@ A Solana Dapp touching all the general and edge operations of the NFTs. This pro
   Create NFT, Display NFT, Transfer NFT, Burn NFT
 
 ## Tech Stack
-
----
 
 - **Frontend:**  
   Next.js, TypeScript, Zod, Tailwind CSS, Framer Motion, React Modal, Lucide React, Axios
