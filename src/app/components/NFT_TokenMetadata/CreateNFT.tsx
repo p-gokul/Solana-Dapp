@@ -124,7 +124,7 @@ const CreateNftPage = () => {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Enter NFT name"
+                            placeholder="eg. MyNFT"
                             label="NFT Name"
                         />
                     </div>
@@ -135,8 +135,8 @@ const CreateNftPage = () => {
                             type="text"
                             value={uri}
                             onChange={(e) => setUri(e.target.value)}
-                            placeholder="Enter Metadata Uri"
-                            label="Metadata Uri"
+                            placeholder="eg. https://abcdef.arweave.net/KUAIIbk6"
+                            label="Metadata URL"
                         />
                     </div>
 
@@ -147,7 +147,7 @@ const CreateNftPage = () => {
                             value={percent}
                             onChange={(e) => setPercent(Number(e.target.value))}
                             placeholder="Enter Seller Fee (e.g., 5 for 5%)"
-                            label="Seller Fee"
+                            label="Seller Fee (%)"
                         />
                     </div>
 

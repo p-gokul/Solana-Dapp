@@ -26,9 +26,11 @@ const DisplayNftPage = () => {
                             width={100}
                             className="mb-4 h-32 w-32 rounded object-cover"
                         />
-                        <h2 className="text-lg font-bold">{nft.name}</h2>
-                        <p className="text-gray-600">{nft.symbol}</p>
-                        <p className="mt-2 text-gray-700">{nft.description}</p>
+                        <h2 className="text-lg font-bold">Name: {nft.name}</h2>
+                        <p className="text-gray-600">Symbol: {nft.symbol}</p>
+                        <p className="mt-2 text-gray-700">
+                            Description: {nft.description}
+                        </p>
                         <p className="mt-4 text-gray-500">
                             <strong>Seller Fee:</strong>{" "}
                             {nft.sellerFeeBasisPoints}%

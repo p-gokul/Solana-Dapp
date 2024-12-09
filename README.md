@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Solana Token and NFT Ecosystem
 
-## Getting Started
+A Solana Dapp touching all the general and edge operations of the NFTs. This project is designed to understand the NFTs in detail, various NFT creation methodologies and their operations. It also includes the operations with the NFT Collections, cNFTs and pNFTs.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+- **Spl-Token-2022 Token Operations:**  
+  Create Token, Display Token, Mint Token, Transfer Token, Delegate Token, Revoke Delegated Token, Delegation Information, Burn Tokens
 
-To learn more about Next.js, take a look at the following resources:
+- **NFT (Metaplex - Token Metadata) Operations:**  
+  Create NFT, Display NFT, Transfer NFT, Burn NFT
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **NFT (Metaplex - Core) Operations:**  
+  Create NFT, Display NFT, Transfer NFT, Burn NFT
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:**  
+  Next.js, TypeScript, Zod, Tailwind CSS, Framer Motion, React Modal, Lucide React, Axios
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Blockchain (TypeScript Libraries):**  
+  Solana, Wallet Adapters, Metaplex Core, Metaplex Token-Metadata, Metaplex Umi
+
+## Installation
+
+---
+
+To get started with the "Solana Token and NFT Ecosystem" Dapp, follow the steps below.
+
+You can run the Dapp using either of the following methods:
+
+### A. Using the Public Image
+
+1. **Download and run the public image:**
+
+    ```bash
+    docker run -d --name solana-dapp -p 3000:3000 gokulpant/solana-dapp:v3
+    ```
+
+### B. Using Docker
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/p-gokul/Solana-Dapp.git
+    cd Solana-Dapp
+    ```
+
+2. **Build the image and run the container:**
+
+    ```bash
+    docker compose up -d --build
+    ```
+
+### C. Running the Dapp Locally
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/p-gokul/Solana-Dapp.git
+    cd Solana-Dapp
+    ```
+
+2. **Install dependencies:**
+
+    ```bash
+    npm install -f
+    ```
+
+3. **Build the Project:**
+
+    ```bash
+    npm run build
+    ```
+
+4. **Start the app:**
+
+    ```bash
+    npm run start
+    ```
+
+---

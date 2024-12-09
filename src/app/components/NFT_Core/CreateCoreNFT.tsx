@@ -119,15 +119,15 @@ const CreateNftPageCore = () => {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter NFT Name"
+                        placeholder="eg. MyCoreNFT"
                         label="NFT Name"
                     />
                     <InputField
                         type="text"
                         value={uri}
                         onChange={(e) => setUri(e.target.value)}
-                        placeholder="Enter Metadata URI"
-                        label="NFT Name"
+                        placeholder="eg. https://abcdef.arweave.net/KUAIIbk6"
+                        label="Metadata URL"
                     />
                     <GenericButton
                         onClick={handleCreateNFT}
